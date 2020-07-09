@@ -1,4 +1,4 @@
-import items, actions, world
+import items, actions, world, features
 
 class Room:
   def __init__(self, x, y):
@@ -23,7 +23,6 @@ class Room:
     moves = self.adjacent_moves()
     moves.append(actions.ViewInventory())
     return moves
-
 
 class ItemRoom(Room):
   def __init__(self, x, y, item):

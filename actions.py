@@ -1,5 +1,5 @@
 from player import Player
-from tiles import ItemRoom
+import tiles
 
 class Action:
   def __init__(self, method, name, hotkey, **kwargs):
@@ -27,4 +27,4 @@ class ViewInventory(Action):
     super().__init__(method=Player.printInv, name="View inventory", hotkey="i")
 class GetItem(Action):
   def __init__(self, item):
-    super().__init__(method=ItemRoom.modify_player, name="Pickup item", hotkey="p")
+    super().__init__(method=tiles.ItemRoom.modify_player, name="Pickup item", hotkey="p")
