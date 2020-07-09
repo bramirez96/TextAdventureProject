@@ -1,4 +1,5 @@
 import items, world
+from helpers import pause
 
 class Player:
   def __init__(self):
@@ -11,15 +12,32 @@ class Player:
     return self.hp > 0
 
   def printInv(self):
-    for item in self.inventory:
-      print(f"{item}\n")
+    print("Inventory:")
+    if len(self.inventory) > 0:
+      for item in self.inventory:
+        print(item)
+    else:
+      print("=> empty")
+    pause("Press enter to close...")
       
   def move(self, dx, dy):
     self.location_x += dx
     self.location_y += dy
+  
+  def getHelp(self):
+    print(f"*************************************\n"
+          f"* Basic Controls                    *\n"
+          f"* go   -> move to a different room  *\n"
+          f"* i    -> view inventory            *\n"
+          f"* get  -> pick up an item           *\n"
+          f"* look -> inspect a feature closely *\n"
+          f"*************************************")
+    pause("Press enter to close...")
 
   def interact(self, feature):
     feature.interact(self)
+  def getItem(self, item):
+    item.getItem(self)
   
   def moveNorth(self):
     self.move(dx = 0, dy = -1)

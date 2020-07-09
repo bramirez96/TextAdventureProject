@@ -11,24 +11,27 @@ class Action:
   def __str__(self):
     return f"{self.hotkey}: {self.name}"
   
+class Help(Action):
+  def __init__(self):
+    super().__init__(method=Player.getHelp, name="Help", hotkey="help")
 class MoveNorth(Action):
   def __init__(self):
-    super().__init__(method=Player.moveNorth, name="Move north", hotkey="n")
+    super().__init__(method=Player.moveNorth, name="Move north", hotkey="go north")
 class MoveEast(Action):
   def __init__(self):
-    super().__init__(method=Player.moveEast, name="Move east", hotkey="e")
+    super().__init__(method=Player.moveEast, name="Move east", hotkey="go east")
 class MoveSouth(Action):
   def __init__(self):
-    super().__init__(method=Player.moveSouth, name="Move south", hotkey="s")
+    super().__init__(method=Player.moveSouth, name="Move south", hotkey="go south")
 class MoveWest(Action):
   def __init__(self):
-    super().__init__(method=Player.moveWest, name="Move west", hotkey="w")
+    super().__init__(method=Player.moveWest, name="Move west", hotkey="go west")
 class ViewInventory(Action):
   def __init__(self):
     super().__init__(method=Player.printInv, name="View inventory", hotkey="i")
 class GetItem(Action):
-  def __init__(self):
-    super().__init__(method=tiles.ItemRoom.modify_player, name="Pickup item", hotkey="p")
+  def __init__(self, item):
+    super().__init__(method=Player.getItem, name="Pickup item", hotkey=f"get {item.name}", item=item)
 class Interact(Action):
   def __init__(self, feature):
-    super().__init__(method=Player.interact, name="Look at feature", hotkey="l", feature=feature)
+    super().__init__(method=Player.interact, name=f"Look at {feature.name}", hotkey=f"look {feature.name}", feature=feature)

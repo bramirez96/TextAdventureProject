@@ -12,7 +12,8 @@ def load_tiles():
       if tile_name == "AptBed":
         global starting_position
         starting_position = (x, y)
-      _world[(x, y)] = None if tile_name == "." else getattr(__import__("tiles"), tile_name)(x, y)
+      _world[(x, y)] = None if tile_name == "." \
+        else getattr(__import__("tiles"), tile_name)(x, y)
       
 def tile_exists(x, y):
   return _world.get((x, y))

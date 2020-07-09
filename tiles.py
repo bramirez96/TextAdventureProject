@@ -1,4 +1,4 @@
-import items, actions, world, features
+import items, actions, world, features, books, story
 
 class Room:
   def __init__(self, x, y):
@@ -22,64 +22,102 @@ class Room:
   def available_actions(self):
     moves = self.adjacent_moves()
     moves.append(actions.ViewInventory())
+    moves.append(actions.Help())
     return moves
 
 class ItemRoom(Room):
   def __init__(self, x, y, item):
     super().__init__(x, y)
     self.item = item
-  def get_item(self, player):
-    player.inventory.append(self.item)
-  def modify_player(self, player):
-    self.get_item(player)
   def available_actions(self):
-    moves = [*super().available_actions(), actions.GetItem()]
+    moves = [*super().available_actions(), actions.GetItem(self.item)]
     return moves
 
 class FeatureRoom(Room):
   def __init__(self, x, y, feature):
     super().__init__(x, y)
     self.feature = feature
-  def interact(self, feature, player):
-    raise NotImplementedError()
   def available_actions(self):
     # this includes all base actions for a standard room and whatever you need for this one
     moves = [*super().available_actions(), actions.Interact(self.feature)]
     return moves
 
+class ComboRoom(Room):
+  def __init__(self, x, y, features, items):
+    super().__init__(x, y)
+    self.features = features
+    self.items = items
+  def available_actions(self):
+    # includes all base actions for a tile
+    moves = super().available_actions()
+    
+    # needs to include hotkey for ALL features in room
+    for feature in self.features:
+      moves.append(actions.Interact(feature))
+    
+    # and ALL items
+    for item in self.items:
+      moves.append(actions.GetItem(item))
+    
+    # returns those actions correctly
+    return moves
+
 class AptBed(Room):
-  def __init__(self, x=1, y=1):
+  def __init__(self, x, y):
     super().__init__(x, y)
   def intro_text(self):
-    return "You're in your room. LR is N"
+    return story.roomIntro["AptBed"]
   def modify_player(self, player):
     pass
 
 class AptLR(FeatureRoom):
-  def __init__(self, 
-               x = 1, y = 0, 
+  def __init__(self, x, y,
                feature = features.Bookshelf(
-                 features.aliceInWonderland
+                 books.aliceInWonderland,
+                 books.poeTalesPoems,
+                 books.furiouslyHappy,
+                 books.madnessBipolar,
+                 desc = story.interactions["bookshelfApt"]
                 )):
     super().__init__(x, y, feature)
   def intro_text(self):
-    return "You're in your living room. You see a bookshelf"
-  def interact(self, feature, player):
-    return super().interact(feature, player)
+    return story.roomIntro["AptLR"]
 
 class AptKit(ItemRoom):
-  def __init__(self, x = 0, y = 0, item = items.Gum()):
+  def __init__(self, x , y, item = items.Gum()):
     super().__init__(x, y, item)
   def intro_text(self):
-    return "You're in your kitchen. There is gum on the table."
+    return story.roomIntro["AptKit"]
 
 class AptBath(FeatureRoom):
-  def __init__(self, x = 2, y = 0, 
+  def __init__(self, x, y, 
                feature = features.MagicMirror()):
     super().__init__(x, y, feature)
   def intro_text(self):
-    return "You're in your fairly standard bathroom. There's a mirror on the wall above the sink, a toilet, and a shower"
+    return story.roomIntro["AptBath"]
   def modify_player(self, player):
     player.victory = True
-  def interact(self, feature, player):
-    return super().interact(feature, player)
+
+class BookTest(FeatureRoom):
+  def __init__(self, x, y, feature = books.firstStep):
+    super().__init__(x, y, feature)
+  def intro_text(self):
+    return "You're in a room. There's a book on the table."
+
+class Road(Room):
+  def __init__(self, x, y):
+    super().__init__(x, y)
+  def intro_text(self):
+    return "You are on an empty stretch of road"
+
+class ItemTest(ItemRoom):
+  def __init__(self, x, y, item = items.Screwdriver()):
+    super().__init__(x, y, item)
+  def intro_text(self):
+    return "You see a screwdriver behind a rock or something idk"
+
+class ComboTest(ComboRoom):
+  def __init__(self, x, y):
+    super().__init__(x, y, features =[], items=[items.Screwdriver(), items.Gum()])
+  def intro_text(self):
+    return "This is a test of the combo room."
