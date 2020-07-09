@@ -34,13 +34,18 @@ class ItemRoom(Room):
     self.get_item(player)
   def available_actions(self):
     moves = [*super().available_actions(), actions.GetItem()]
+    return moves
 
 class FeatureRoom(Room):
   def __init__(self, x, y, feature):
     super().__init__(x, y)
     self.feature = feature
-  def interact(self, feature):
+  def interact(self, feature, player):
     raise NotImplementedError()
+  def available_actions(self):
+    # this includes all base actions for a standard room and whatever you need for this one
+    moves = [*super().available_actions(), actions.Interact(self.feature)]
+    return moves
 
 class AptBed(Room):
   def __init__(self, x=1, y=1):
@@ -59,6 +64,8 @@ class AptLR(FeatureRoom):
     super().__init__(x, y, feature)
   def intro_text(self):
     return "You're in your living room. You see a bookshelf"
+  def interact(self, feature, player):
+    return super().interact(feature, player)
 
 class AptKit(ItemRoom):
   def __init__(self, x = 0, y = 0, item = items.Gum()):
@@ -72,3 +79,7 @@ class AptBath(FeatureRoom):
     super().__init__(x, y, feature)
   def intro_text(self):
     return "You're in your fairly standard bathroom. There's a mirror on the wall above the sink, a toilet, and a shower"
+  def modify_player(self, player):
+    player.victory = True
+  def interact(self, feature, player):
+    return super().interact(feature, player)

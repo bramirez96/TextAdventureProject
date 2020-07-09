@@ -1,5 +1,6 @@
 from player import Player
 import tiles
+import features
 
 class Action:
   def __init__(self, method, name, hotkey, **kwargs):
@@ -26,5 +27,8 @@ class ViewInventory(Action):
   def __init__(self):
     super().__init__(method=Player.printInv, name="View inventory", hotkey="i")
 class GetItem(Action):
-  def __init__(self, item):
+  def __init__(self):
     super().__init__(method=tiles.ItemRoom.modify_player, name="Pickup item", hotkey="p")
+class Interact(Action):
+  def __init__(self, feature):
+    super().__init__(method=Player.interact, name="Look at feature", hotkey="l", feature=feature)
