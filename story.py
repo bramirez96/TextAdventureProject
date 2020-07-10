@@ -1,3 +1,15 @@
+intro = [
+  """     Text Adventure Game
+       Brandon Ramirez
+
+          Controls
+go   -> move in a direction
+get  -> pick up an item
+look -> interact with objects
+i    -> view your inventory
+help -> view controls
+""",
+]
 roomIntro = {
   "AptBed": """\
 You wake up to a loud blaring sound, just like any 

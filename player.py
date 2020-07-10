@@ -36,8 +36,14 @@ class Player:
 
   def interact(self, feature):
     feature.interact(self)
-  def getItem(self, item):
+  def findItem(self, room, *args, **kwargs):
+    print(args)
+    print(kwargs)
+    print(room.intro_text())
+    pause()
+  def getItem(self, item, room):
     item.getItem(self)
+    room.dropItem(item)
   
   def moveNorth(self):
     self.move(dx = 0, dy = -1)

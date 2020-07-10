@@ -1,4 +1,2 @@
-AptKit  AptLR     AptBath   ComboTest
-.       AptBed    .         BookTest
-.       .         .         ItemTest
-Road    Road      Road      Road
+AptKit  AptLR     AptBath
+.       AptBed    .      

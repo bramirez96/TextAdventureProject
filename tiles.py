@@ -24,6 +24,8 @@ class Room:
     moves.append(actions.ViewInventory())
     moves.append(actions.Help())
     return moves
+  def dropItem(self, item):
+    raise NotImplementedError()
 
 class ItemRoom(Room):
   def __init__(self, x, y, item):
@@ -43,7 +45,7 @@ class FeatureRoom(Room):
     return moves
 
 class ComboRoom(Room):
-  def __init__(self, x, y, features, items):
+  def __init__(self, x, y, features = [], items = []):
     super().__init__(x, y)
     self.features = features
     self.items = items
@@ -57,14 +59,22 @@ class ComboRoom(Room):
     
     # and ALL items
     for item in self.items:
-      moves.append(actions.GetItem(item))
+      moves.append(actions.GetItem(item, self))
     
     # returns those actions correctly
     return moves
-
-class AptBed(Room):
+  def dropItem(self, item):
+    # remove the item from the room when player picks it up
+    self.items.remove(item)
+  def addItem(self, item):
+    self.items.append(item)
+    
+class AptBed(ComboRoom):
   def __init__(self, x, y):
-    super().__init__(x, y)
+    super().__init__(x, y, features = [features.Bookshelf(
+      books.poeTalesPoems,
+      books.firstStep
+    )])
   def intro_text(self):
     return story.roomIntro["AptBed"]
   def modify_player(self, player):
@@ -74,7 +84,6 @@ class AptLR(FeatureRoom):
   def __init__(self, x, y,
                feature = features.Bookshelf(
                  books.aliceInWonderland,
-                 books.poeTalesPoems,
                  books.furiouslyHappy,
                  books.madnessBipolar,
                  desc = story.interactions["bookshelfApt"]
@@ -83,16 +92,15 @@ class AptLR(FeatureRoom):
   def intro_text(self):
     return story.roomIntro["AptLR"]
 
-class AptKit(ItemRoom):
-  def __init__(self, x , y, item = items.Gum()):
-    super().__init__(x, y, item)
+class AptKit(ComboRoom):
+  def __init__(self, x , y):
+    super().__init__(x, y, items=[items.Gum()])
   def intro_text(self):
     return story.roomIntro["AptKit"]
 
-class AptBath(FeatureRoom):
-  def __init__(self, x, y, 
-               feature = features.MagicMirror()):
-    super().__init__(x, y, feature)
+class AptBath(ComboRoom):
+  def __init__(self, x, y):
+    super().__init__(x, y, features = [features.MagicMirror()])
   def intro_text(self):
     return story.roomIntro["AptBath"]
   def modify_player(self, player):
@@ -121,3 +129,31 @@ class ComboTest(ComboRoom):
     super().__init__(x, y, features =[], items=[items.Screwdriver(), items.Gum()])
   def intro_text(self):
     return "This is a test of the combo room."
+
+
+class IFTest(ComboRoom):
+  def __init__(self, x, y):
+    super().__init__(x, y, features=[features.DeskWithScrewdiver()])
+  def intro_text(self):
+    return "You see a desk in the corner"
+  def available_actions(self):
+    # includes all base actions for a tile
+    moves = self.adjacent_moves()
+    moves.append(actions.ViewInventory())
+    moves.append(actions.Help())
+    
+    # needs to include hotkey for ALL features in room
+    for feature in self.features:
+      if len(feature.items) > 0:
+        for item in feature.items:
+          moves.append(actions.FindItem(feature, item, self))
+      else:
+        moves.append(actions.Interact(feature))
+    
+    # and ALL items
+    for item in self.items:
+      moves.append(actions.GetItem(item, self))
+    
+    # returns those actions correctly
+    return moves
+  

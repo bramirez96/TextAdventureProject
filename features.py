@@ -15,6 +15,9 @@ class ItemFeature(Feature):
     self.items = items
   def interact(self, player, room):
     raise NotImplementedError()
+  # def findItem(self, item, room):
+  #   room.items.append(item)
+  #   self.items.remove(item)
    
 class Book(Feature):
   def __init__(self, title, author, text):
@@ -69,6 +72,7 @@ class Book(Feature):
     clear()
     print(self)
     pause()
+    pause("You put the book down.")
     
 class Bookshelf(Feature):
   def __init__(self, *books, desc = story.interactions["bookshelfDEF"]):
@@ -119,4 +123,6 @@ class DeskWithScrewdiver(ItemFeature):
   def __init__(self, name="desk"):
     super().__init__(name, items.Screwdriver())
   def interact(self, player, room):
-    raise NotImplementedError()
+    pause("You find a screwdriver in the drawer.")
+    room.items.append(self.items[0])
+    # prompt("There is nothing of importance in the desk.")

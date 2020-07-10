@@ -1,10 +1,15 @@
-import world
+import world, story
 from player import Player
 from helpers import pause, borderpr, prompt, clear
 
 def play():
   world.load_tiles()
   player = Player()
+  clear()
+  for i in story.intro:
+    borderpr(i)
+    pause()
+    
   while player.isAlive and not player.victory:
     # run game loop
     clear()

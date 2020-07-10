@@ -46,7 +46,7 @@ def borderpr(string):
 def prompt(string = "What do you do?"):
   print(string)
   x = input(">> ")
-  return x
+  return x.lower()
 
 def clear():
    os.system("cls")
