@@ -35,13 +35,10 @@ class Player:
     pause("Press enter to close...")
 
   def interact(self, feature):
+    pause(f"You look closer at the {feature.name}...")
     feature.interact(self)
-  def findItem(self, room, *args, **kwargs):
-    print(args)
-    print(kwargs)
-    print(room.intro_text())
-    pause()
   def getItem(self, item, room):
+    pause(f"You reach out and take the {item.name}.")
     item.getItem(self)
     room.dropItem(item)
   

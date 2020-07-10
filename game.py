@@ -16,9 +16,9 @@ def play():
     room = world.tile_exists(player.location_x, player.location_y)
     borderpr(room.intro_text())
     available_actions = room.available_actions()
-    print("Choose an action:\n")
-    for action in available_actions:
-      print(f">> {action}")
+    # print("Choose an action:\n")
+    # for action in available_actions:
+    #   print(f">> {action}")
     action_input = prompt()
     for action in available_actions:
       if action_input == action.hotkey:

@@ -34,6 +34,4 @@ class GetItem(Action):
 class Interact(Action):
   def __init__(self, feature):
     super().__init__(method=Player.interact, name=f"Look at {feature.name}", hotkey=f"look {feature.name}", feature=feature)
-class FindItem(Action):
-  def __init__(self, feature, item, room):
-    super().__init__(method=Player.findItem, name=f"find {item.name}", hotkey=f"look {feature.name}", room=room)    
+    

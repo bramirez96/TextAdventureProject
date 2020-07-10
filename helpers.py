@@ -2,7 +2,7 @@ import os
 
 def pause(message = "Press enter to continue...\n", end =False):
   if end:
-    input("Your journey has reached its end.")
+    input("To be continued...")
   else:
     input(message)
 

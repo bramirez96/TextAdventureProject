@@ -9,16 +9,6 @@ class Feature:
   def interact(self, player):
     raise NotImplementedError()
 
-class ItemFeature(Feature):
-  def __init__(self, name, *items):
-    super().__init__(name)
-    self.items = items
-  def interact(self, player, room):
-    raise NotImplementedError()
-  # def findItem(self, item, room):
-  #   room.items.append(item)
-  #   self.items.remove(item)
-   
 class Book(Feature):
   def __init__(self, title, author, text):
     super().__init__(name="book")
@@ -90,15 +80,18 @@ class Bookshelf(Feature):
       for i, book in enumerate(self.books):
         print(f"{i + 1}: {book.title}")
       print(f"n: I don't want to read")
-      usr_input = input(">> ")
+      usr_input = prompt()
       if (usr_input != "n"):
         choice = int(usr_input) - 1
       else:
         choice = -1
     else:
-      print(f"You reach for a book called \"{self.books[choice].title}\"")
-      pause()
+      borderpr(self.desc)
+      usr_input = prompt(f"Would you like to read \"{self.books[0].title}\"? (y/n)")
+      if usr_input == "n":
+        choice = -1
     if choice == -1:
+      pause("You don't feel like reading right now...")
       pass
     else:
       self.books[choice].interact(player)
@@ -110,19 +103,15 @@ class MagicMirror(Feature):
   def interact(self, player):
     # when the user interacts with it the first time, they see a wink
     # the second time, they're drawn in by a mysterious force?
+    clear()
     if self.count == 1:
-      print("Something pulls you into the mirror")
+      borderpr(story.interactions["mirror2"])
+      pause()
+      clear()
+      borderpr(story.interactions["falling"])
       player.victory = True
       pause(end=True)
-    else:
-      print("the mirror winks at you")
+    else:      
+      borderpr(story.interactions["mirror1"])
       self.count += 1
       pause()
-  
-class DeskWithScrewdiver(ItemFeature):
-  def __init__(self, name="desk"):
-    super().__init__(name, items.Screwdriver())
-  def interact(self, player, room):
-    pause("You find a screwdriver in the drawer.")
-    room.items.append(self.items[0])
-    # prompt("There is nothing of importance in the desk.")
