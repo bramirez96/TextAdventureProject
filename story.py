@@ -163,8 +163,12 @@ Which book would you like to read?
 mostly CDs, DVDs, and memorabilia.
 
 You manage to find one book on the bottom shelf.
-"""
+""",
+  "bookDEF": "You see a book.",
+  "mirrorIntro1": "On the wall above the sink is a large, ornate mirror.",
+  "mirrorIntro2": "You feel a sense of dread thinking about it."
 }
+
 items = {
   "aptKitGum": """Next to a stack of unopened mail on the kitchen table,
 you see a piece of gum.

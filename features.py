@@ -2,73 +2,32 @@ from helpers import pause, prompt, borderpr, clear
 import story
 import items
 
+# BASE FEATURES 
+
 class Feature:
-  def __init__(self, name):
-    super().__init__()
-    self.name = name
+  def __init__(self, 
+               tag,   # single word lowercase descriptor for cli
+               desc,  # block of text to print out at beginning of interaction 
+               intro, # sentence or two added to room intro. should have a default
+               *items # optional list of items found in the feature
+               ):
+    self.tag   = tag.lower()
+    self.desc  = desc
+    self.intro = intro
+    self.items = items
   def interact(self, player):
+    # all actions are dispatched through the player class
+    # each feature should hve unique interactions
     raise NotImplementedError()
 
-class Book(Feature):
-  def __init__(self, title, author, text):
-    super().__init__(name="book")
-    self.title = title
-    self.author = author
-    self.text = text
-  def __str__(self):
-    # initialize helpful variables for printing
-    box_length = 0
-    dots = "..."
-    blanks = ""
-    borders = ""
-    
-    # get max line length in specific text
-    for line in self.text.splitlines():
-      if len(line) > box_length:
-        box_length = len(line)
-    
-    # creating dividers based on variable length
-    dotline = f"= {dots:^{box_length}s} =\n"
-    blankline = f"= {blanks:{box_length}s} =\n"
-    
-    # create border based on length of text
-    for x in range(box_length + 4):
-      borders += "="
-    
-    # add a border
-    newString = borders + "\n"
-    
-    # add title and author
-    the_title = f"- {self.title} -"
-    newString += f"= {the_title:^{box_length}s} =\n"
-    newString += f"= {self.author:^{box_length}s} =\n"
-    
-    # add dots around text
-    newString += dotline
-    
-    # read in each line with a fixed length and border
-    for i, line in enumerate(self.text.splitlines()):
-      if i != 0:
-         newString = newString + f"= {line:<{box_length}s} =\n"
-      
-    # add dots and border to the end
-    newString += dotline
-    newString += borders
-    
-    # return formatted string
-    return newString
-  def interact(self, player):
-    pause(message = "You reach for the book...")
-    clear()
-    print(self)
-    pause()
-    pause("You put the book down.")
-    
 class Bookshelf(Feature):
-  def __init__(self, *books, desc = story.interactions["bookshelfDEF"]):
-    super().__init__(name="bookshelf")
+  def __init__(self,
+               desc  = story.interactions["bookshelfDEF"], # default
+               intro = "You see a bookshelf.", # default
+               books = [], #default to no books
+               *items):
     self.books = books
-    self.desc = desc
+    super().__init__(desc, intro, tag="bookshelf", *items)
   def interact(self, player):
     # need to be able to see the bookshelf and interact ->
     # interaction should display the available books and an input
@@ -96,22 +55,78 @@ class Bookshelf(Feature):
     else:
       self.books[choice].interact(player)
 
-class MagicMirror(Feature):
-  def __init__(self):
-    super().__init__(name="mirror")
-    self.count = 0
+class Book(Feature):
+  def __init__(self, title, author, text, # specific book info
+               desc = story.interactions["bookDEF"], 
+               intro = "You see a book.", 
+               *items):
+    self.title = title
+    self.author = author
+    self.text = text
+    super().__init__(desc, intro, tag="book", *items)
+  def __str__(self):
+    # initialize helpful variables for printing
+    box_length = 0
+    dots = "..."
+    blanks = ""
+    borders = ""
+    the_title = f"- {self.title} -"
+    
+    # get max line length and initialize properly-sized dividers
+    for line in self.text.splitlines():
+      if len(line) > box_length:
+        box_length = len(line)
+    dotline = f"= {dots:^{box_length}s} =\n"
+    blankline = f"= {blanks:{box_length}s} =\n"
+    for x in range(box_length + 4):
+      borders += "="
+    
+    # create book readout in newString
+    newString = borders + "\n"                         # add top border
+    newString += f"= {the_title:^{box_length}s} =\n"   # add title
+    newString += f"= {self.author:^{box_length}s} =\n" # add author
+    newString += dotline                               # add dotted line    
+    for i, line in enumerate(self.text.splitlines()):
+      # ignoring first line of text block (which is blank)
+      # add each individual text line with the proper proper length
+      if i != 0:
+         newString = newString + f"= {line:<{box_length}s} =\n"
+    newString += dotline # add dots
+    newString += borders # add border
+    return newString     # return text readout
   def interact(self, player):
-    # when the user interacts with it the first time, they see a wink
-    # the second time, they're drawn in by a mysterious force?
+    pause(message = "You reach for the book...") # pause for immersion
     clear()
-    if self.count == 1:
-      borderpr(story.interactions["mirror2"])
+    print(self) # print out neatly formatted book and then pause
+    pause()
+    pause("You put the book down.") # pause for immersion
+  
+  
+# Story Specific Features
+class MagicMirror(Feature):
+  def __init__(self,
+               desc = story.interactions["mirror1"], 
+               intro = story.interactions["mirrorIntro1"], 
+               *items):
+    self.count = 1
+    super().__init__(desc, intro, tag = "mirror", *items)
+  def interact(self, player):
+    if (self.count == 1):
+      # first interaction
+      borderpr(self.desc)
+      pause()
+      # on continuation, state of mirror updates
+      self.count += 1
+      self.desc  = story.interactions["mirror2"]
+      self.intro += " " + story.interactions["mirrorIntro2"]
+    else:
+      borderpr(self.desc)
       pause()
       clear()
       borderpr(story.interactions["falling"])
+      # temporary end of game loop
       player.victory = True
-      pause(end=True)
-    else:      
-      borderpr(story.interactions["mirror1"])
-      self.count += 1
-      pause()
+      pause(end = True)
+      # later implementaions will transport players to a 
+      # different tile, to continue the rest of the story
+      

@@ -12,8 +12,12 @@ class Item:
 
 class Gum(Item):
   def __init__(self, intro):
-    super().__init__(name="gum", desc="a single stick of gum.", intro=intro)
+    super().__init__(name="gum", 
+                     desc="a single stick of gum.", 
+                     intro=intro)
 
 class Screwdriver(Item):
   def __init__(self, intro):
-    super().__init__(name="screwdriver", desc="this could come in handy", intro=intro)
+    super().__init__(name="screwdriver", 
+                     desc="this could come in handy", 
+                     intro=intro)

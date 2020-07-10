@@ -27,22 +27,22 @@ class Room:
   def dropItem(self, item):
     raise NotImplementedError()
 
-class ItemRoom(Room):
-  def __init__(self, x, y, item):
-    super().__init__(x, y)
-    self.item = item
-  def available_actions(self):
-    moves = [*super().available_actions(), actions.GetItem(self.item)]
-    return moves
+# class ItemRoom(Room):
+#   def __init__(self, x, y, item):
+#     super().__init__(x, y)
+#     self.item = item
+#   def available_actions(self):
+#     moves = [*super().available_actions(), actions.GetItem(self.item)]
+#     return moves
 
-class FeatureRoom(Room):
-  def __init__(self, x, y, feature):
-    super().__init__(x, y)
-    self.feature = feature
-  def available_actions(self):
-    # this includes all base actions for a standard room and whatever you need for this one
-    moves = [*super().available_actions(), actions.Interact(self.feature)]
-    return moves
+# class FeatureRoom(Room):
+#   def __init__(self, x, y, feature):
+#     super().__init__(x, y)
+#     self.feature = feature
+#   def available_actions(self):
+#     # this includes all base actions for a standard room and whatever you need for this one
+#     moves = [*super().available_actions(), actions.Interact(self.feature)]
+#     return moves
 
 class ComboRoom(Room):
   def __init__(self, x, y, features = [], items = []):
@@ -86,15 +86,15 @@ class AptBed(ComboRoom):
   def modify_player(self, player):
     pass
 
-class AptLR(FeatureRoom):
+class AptLR(ComboRoom):
   def __init__(self, x, y,
-               feature = features.Bookshelf(
+               feature = [features.Bookshelf(
                  books.furiouslyHappy,
                  books.madnessBipolar,
                  books.poeTalesPoems,
                  books.firstStep,
                  desc = story.interactions["bsAPTLR"]
-                )):
+                )]):
     super().__init__(x, y, feature)
   def intro_text(self):
     return story.roomIntro["AptLR"]
