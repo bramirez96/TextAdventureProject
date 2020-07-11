@@ -20,7 +20,7 @@ Rubbing the sleep from your eyes, you look around
 the dark room before you. The curtains on the window
 are drawn tight, preventing any sunlight from entering.
 In one corner you can just about make out a pile of
-laundry on the floor. There's a bookshelf by the door.
+laundry on the floor.
 
 You welcome the darkness.
 
@@ -33,15 +33,6 @@ There is a door to the north that leads to your living room.
 You're standing in your living room. You hear the
 strange tapping sound again, louder than in your room. 
 Is it coming from inside your apartment?
-
-There is another bookshelf against the wall. You feel
-a strange sense of guilt that you haven't read a book
-for years. Like you've failed yourself somehow.
-
-To the south is the bedroom.
-
-To the west is your kitchen. When was the last time
-you ate? The days are starting to blur together.
 
 To the east is your bathroom. You don't have to go.
 """,
@@ -67,8 +58,6 @@ You can't shake the eerie feeling that you're in a
 fishtank, and someone is tapping against your glass.
 
 What on Earth is that sound?? All at once it stops.
-
-To the west is your living room.
 """,
   "AptBath2": """\
 Standing in the bathroom, you ponder what you saw in the mirror.
@@ -166,11 +155,16 @@ You manage to find one book on the bottom shelf.
 """,
   "bookDEF": "You see a book.",
   "mirrorIntro1": "On the wall above the sink is a large, ornate mirror.",
-  "mirrorIntro2": "You feel a sense of dread thinking about it."
+  "mirrorIntro2": "\nYou feel a sense of dread thinking about it."
 }
 
 items = {
   "aptKitGum": """Next to a stack of unopened mail on the kitchen table,
-you see a piece of gum.
-"""
+you see a piece of gum."""
+}
+
+featureIntros = {
+  "aptLRBookshelf": """There is another bookshelf against the wall. You feel
+a strange sense of guilt that you haven't read a book
+for years. Like you've failed yourself somehow."""
 }

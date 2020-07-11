@@ -1,23 +1,36 @@
 import items, actions, world, features, books, story
 
 class Room:
-  def __init__(self, x, y):
+  def __init__(self, x, y, intro):
     self.x = x
     self.y = y
+    self.intro = intro
+    self.north = None
+    self.east  = None
+    self.south = None
+    self.west  = None
   def intro_text(self):
     raise NotImplementedError()
   def modify_player(self, player):
     raise NotImplementedError()
   def adjacent_moves(self):
     moves = []
-    if world.tile_exists(self.x, self.y - 1):
+    north = world.tile_exists(self.x, self.y - 1)
+    east  = world.tile_exists(self.x + 1, self.y)
+    south = world.tile_exists(self.x, self.y + 1)
+    west  = world.tile_exists(self.x - 1, self.y)
+    if north:
       moves.append(actions.MoveNorth())
-    if world.tile_exists(self.x + 1, self.y):
+      self.north = north
+    if east:
       moves.append(actions.MoveEast())
-    if world.tile_exists(self.x, self.y + 1):
+      self.east = east
+    if south:
       moves.append(actions.MoveSouth())
-    if world.tile_exists(self.x - 1, self.y):
+      self.south = south
+    if west:
       moves.append(actions.MoveWest())
+      self.west = west
     return moves
   def available_actions(self):
     moves = self.adjacent_moves()
@@ -27,26 +40,13 @@ class Room:
   def dropItem(self, item):
     raise NotImplementedError()
 
-# class ItemRoom(Room):
-#   def __init__(self, x, y, item):
-#     super().__init__(x, y)
-#     self.item = item
-#   def available_actions(self):
-#     moves = [*super().available_actions(), actions.GetItem(self.item)]
-#     return moves
-
-# class FeatureRoom(Room):
-#   def __init__(self, x, y, feature):
-#     super().__init__(x, y)
-#     self.feature = feature
-#   def available_actions(self):
-#     # this includes all base actions for a standard room and whatever you need for this one
-#     moves = [*super().available_actions(), actions.Interact(self.feature)]
-#     return moves
 
 class ComboRoom(Room):
-  def __init__(self, x, y, features = [], items = []):
-    super().__init__(x, y)
+  def __init__(self, x, y,
+               features = [], 
+               items = [],
+               intro = "is another room"):
+    super().__init__(x, y, intro=intro)
     self.features = features
     self.items = items
   def available_actions(self):
@@ -69,20 +69,33 @@ class ComboRoom(Room):
   def addItem(self, item):
     self.items.append(item)
   def intro_text(self):
+    self.adjacent_moves()
     newText = ""
+    for feature in self.features:
+      newText += "\n" + feature.intro
     for item in self.items:
-      newText += item.intro
+      newText += "\n" + item.intro
+    if self.north:
+      newText += f"\n\nTo the north {self.north.intro}"
+    if self.east:
+      newText += f"\n\nTo the east {self.east.intro}"
+    if self.south:
+      newText += f"\n\nTo the south {self.south.intro}"
+    if self.west:
+      newText += f"\n\nTo the west {self.west.intro}"
     return newText
     
 class AptBed(ComboRoom):
   def __init__(self, x, y):
-    super().__init__(x, y, 
+    super().__init__(x, y,
                      features = [features.Bookshelf(
                        books=[books.aliceInWonderland],
                        desc = story.interactions["bsAPTBR"]
-                     )])
+                     )],
+                     intro = "is your bedroom. You'd love to curl \n\
+back up in bed right now.")
   def intro_text(self):
-    return story.roomIntro["AptBed"]
+    return story.roomIntro["AptBed"] + super().intro_text()
   def modify_player(self, player):
     pass
 
@@ -93,31 +106,40 @@ class AptLR(ComboRoom):
                  books.madnessBipolar,
                  books.poeTalesPoems,
                  books.firstStep],
-                 desc = story.interactions["bsAPTLR"]
+                 desc = story.interactions["bsAPTLR"],
+                 intro = story.featureIntros["aptLRBookshelf"]
                 )]):
-    super().__init__(x, y, feature)
+    super().__init__(x, y, feature,
+                     intro = "is your living room.")
   def intro_text(self):
-    return story.roomIntro["AptLR"]
+    return story.roomIntro["AptLR"] + super().intro_text()
 
 class AptKit(ComboRoom):
   def __init__(self, x , y):
-    super().__init__(x, y, items=[items.Gum(story.items["aptKitGum"])])
+    super().__init__(x, y, 
+                     items=[items.Gum(story.items["aptKitGum"])],
+                     intro="is your kitchen. When was the last time\n\
+you ate? The days are starting to blur together.")
   def intro_text(self):
-    return story.roomIntro["AptKit"] + "\n" + super().intro_text()
+    return story.roomIntro["AptKit"] + super().intro_text()
 
 class AptBath(ComboRoom):
   def __init__(self, x, y):
-    super().__init__(x, y, features = [features.MagicMirror()])
+    super().__init__(x, y, 
+                     features = [features.MagicMirror()],
+                     intro="is your bathroom. You don't have to go.")
     self.count = 1
   def intro_text(self):
-    text = story.roomIntro[f"AptBath{self.count}"]
+    text = story.roomIntro[f"AptBath{self.count}"] + super().intro_text()
     self.count += 1
+    self.intro = "is your bathroom. You shudder as you remember\n\
+your reflection"
     return text
   def modify_player(self, player):
     player.victory = True
 
-class Road(Room):
+class ARoom(Room):
   def __init__(self, x, y):
-    super().__init__(x, y)
+    super().__init__(x, y, intro="I love jisoo")
   def intro_text(self):
-    return "You are on an empty stretch of road"
+    return "this is a test"

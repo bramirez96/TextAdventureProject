@@ -25,14 +25,28 @@ class MoveWest(Action):
     
 class Help(Action):
   def __init__(self):
-    super().__init__(method=Player.getHelp, name="Help", hotkey="help")
+    super().__init__(method=Player.getHelp, 
+                     name="Help", 
+                     hotkey="help")
+    
 class ViewInventory(Action):
   def __init__(self):
-    super().__init__(method=Player.printInv, name="View inventory", hotkey="i")
+    super().__init__(method=Player.printInv, 
+                     name="View inventory", 
+                     hotkey="i")
+    
 class GetItem(Action):
   def __init__(self, item, room):
-    super().__init__(method=Player.getItem, name="Pickup item", hotkey=f"get {item.name}", item=item, room = room)
+    super().__init__(method=Player.getItem, 
+                     name="Pickup item", 
+                     hotkey=f"get {item.tag}", 
+                     item=item, 
+                     room=room)
+    
 class Interact(Action):
   def __init__(self, feature):
-    super().__init__(method=Player.interact, name=f"Look at {feature.tag}", hotkey=f"look {feature.tag}", feature=feature)
+    super().__init__(method=Player.interact, 
+                     name=f"Look at {feature.tag}", 
+                     hotkey=f"look {feature.tag}", 
+                     feature=feature)
     
