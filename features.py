@@ -109,25 +109,18 @@ class MagicMirror(Feature):
                intro = story.interactions["mirrorIntro1"], 
                items = []):
     self.count = 1
-    super().__init__(desc, intro, items=items, tag = "mirror")
+    super().__init__(desc, intro, items=items, tag="mirror")
   def interact(self, player):
     clear()
-    if (self.count == 1):
-      # first interaction
-      borderpr(self.desc)
-      pause()
-      # on continuation, state of mirror updates
-      self.count += 1
-      self.desc  = story.interactions["mirror2"]
-      self.intro += " " + story.interactions["mirrorIntro2"]
-    else:
-      borderpr(self.desc)
-      pause()
+    borderpr(self.desc)
+    pause()
+    self.count += 1
+    if self.count == 4:
       clear()
       borderpr(story.interactions["falling"])
-      # temporary end of game loop
       player.victory = True
-      pause(end = True)
-      # later implementaions will transport players to a 
-      # different tile, to continue the rest of the story
+      pause(end=True)
+    else:
+      self.desc = story.interactions[f"mirror{self.count}"]
+      self.intro = story.interactions[f"mirrorIntro{self.count}"]
       

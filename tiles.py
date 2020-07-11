@@ -83,14 +83,15 @@ class ComboRoom(Room):
       newText += f"\n\nTo the south {self.south.intro}"
     if self.west:
       newText += f"\n\nTo the west {self.west.intro}"
-    return newText
+    return "\n" + newText 
     
 class AptBed(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y,
                      features = [features.Bookshelf(
                        books=[books.aliceInWonderland],
-                       desc = story.interactions["bsAPTBR"]
+                       desc = story.interactions["bsAPTBR"],
+                       intro = story.featureIntros["aptBRBookshelf"]
                      )],
                      intro = "is your bedroom. You'd love to curl \n\
 back up in bed right now.")
@@ -127,19 +128,8 @@ class AptBath(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y, 
                      features = [features.MagicMirror()],
-                     intro="is your bathroom. You don't have to go.")
-    self.count = 1
+                     intro="is your bathroom.")
   def intro_text(self):
-    text = story.roomIntro[f"AptBath{self.count}"] + super().intro_text()
-    self.count += 1
-    self.intro = "is your bathroom. You shudder as you remember\n\
-your reflection"
+    curCount = self.features[0].count
+    text = story.roomIntro[f"AptBath{curCount}"] + super().intro_text()
     return text
-  def modify_player(self, player):
-    player.victory = True
-
-class ARoom(Room):
-  def __init__(self, x, y):
-    super().__init__(x, y, intro="I love jisoo")
-  def intro_text(self):
-    return "this is a test"

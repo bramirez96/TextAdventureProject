@@ -19,11 +19,15 @@ def play():
     # print("Choose an action:\n")
     # for action in available_actions:
     #   print(f">> {action}")
+    isValid = False
     action_input = prompt()
     for action in available_actions:
       if action_input == action.hotkey:
         player.doAction(action, **action.kwargs)
+        isValid = True
         break
+    if not isValid:
+      pause("You're not sure how you'd do that...")
 
 if __name__ == "__main__":
   play()
