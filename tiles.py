@@ -78,7 +78,7 @@ class AptBed(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y, 
                      features = [features.Bookshelf(
-                       books.aliceInWonderland,
+                       books=[books.aliceInWonderland],
                        desc = story.interactions["bsAPTBR"]
                      )])
   def intro_text(self):
@@ -88,11 +88,11 @@ class AptBed(ComboRoom):
 
 class AptLR(ComboRoom):
   def __init__(self, x, y,
-               feature = [features.Bookshelf(
+               feature = [features.Bookshelf(books=[
                  books.furiouslyHappy,
                  books.madnessBipolar,
                  books.poeTalesPoems,
-                 books.firstStep,
+                 books.firstStep],
                  desc = story.interactions["bsAPTLR"]
                 )]):
     super().__init__(x, y, feature)

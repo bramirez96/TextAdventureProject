@@ -6,10 +6,10 @@ import items
 
 class Feature:
   def __init__(self, 
-               tag,   # single word lowercase descriptor for cli
-               desc,  # block of text to print out at beginning of interaction 
-               intro, # sentence or two added to room intro. should have a default
-               *items # optional list of items found in the feature
+               desc,      # block of text to print out at beginning of interaction 
+               intro,     # sentence or two added to room intro. should have a default
+               tag,       # single word lowercase descriptor for cli
+               items = [] # optional list of items found in the feature
                ):
     self.tag   = tag.lower()
     self.desc  = desc
@@ -25,9 +25,9 @@ class Bookshelf(Feature):
                desc  = story.interactions["bookshelfDEF"], # default
                intro = "You see a bookshelf.", # default
                books = [], #default to no books
-               *items):
+               items = []):
     self.books = books
-    super().__init__(desc, intro, tag="bookshelf", *items)
+    super().__init__(desc, intro, items=items, tag="bookshelf")
   def interact(self, player):
     # need to be able to see the bookshelf and interact ->
     # interaction should display the available books and an input
@@ -59,11 +59,11 @@ class Book(Feature):
   def __init__(self, title, author, text, # specific book info
                desc = story.interactions["bookDEF"], 
                intro = "You see a book.", 
-               *items):
+               items = []):
     self.title = title
     self.author = author
     self.text = text
-    super().__init__(desc, intro, tag="book", *items)
+    super().__init__(desc, intro, items=items, tag="book")
   def __str__(self):
     # initialize helpful variables for printing
     box_length = 0
@@ -107,10 +107,11 @@ class MagicMirror(Feature):
   def __init__(self,
                desc = story.interactions["mirror1"], 
                intro = story.interactions["mirrorIntro1"], 
-               *items):
+               items = []):
     self.count = 1
-    super().__init__(desc, intro, tag = "mirror", *items)
+    super().__init__(desc, intro, items=items, tag = "mirror")
   def interact(self, player):
+    clear()
     if (self.count == 1):
       # first interaction
       borderpr(self.desc)

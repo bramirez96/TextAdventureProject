@@ -10,9 +10,6 @@ class Action:
   def __str__(self):
     return f"{self.hotkey}: {self.name}"
   
-class Help(Action):
-  def __init__(self):
-    super().__init__(method=Player.getHelp, name="Help", hotkey="help")
 class MoveNorth(Action):
   def __init__(self):
     super().__init__(method=Player.moveNorth, name="Move north", hotkey="go north")
@@ -25,6 +22,10 @@ class MoveSouth(Action):
 class MoveWest(Action):
   def __init__(self):
     super().__init__(method=Player.moveWest, name="Move west", hotkey="go west")
+    
+class Help(Action):
+  def __init__(self):
+    super().__init__(method=Player.getHelp, name="Help", hotkey="help")
 class ViewInventory(Action):
   def __init__(self):
     super().__init__(method=Player.printInv, name="View inventory", hotkey="i")
@@ -33,5 +34,5 @@ class GetItem(Action):
     super().__init__(method=Player.getItem, name="Pickup item", hotkey=f"get {item.name}", item=item, room = room)
 class Interact(Action):
   def __init__(self, feature):
-    super().__init__(method=Player.interact, name=f"Look at {feature.name}", hotkey=f"look {feature.name}", feature=feature)
+    super().__init__(method=Player.interact, name=f"Look at {feature.tag}", hotkey=f"look {feature.tag}", feature=feature)
     
