@@ -93,7 +93,8 @@ class AptBed(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y,
                      features = [featureLib.Bookshelf(
-                       books=[books.aliceInWonderland],
+                       room=self,
+                       books=[featureLib.Book(room=self, **books.aliceInWonderland)],
                        desc = story.interactions["bsAPTBR"],
                        intro = story.featureIntros["aptBRBookshelf"]
                      )],
@@ -105,16 +106,21 @@ back up in bed right now.")
     pass
 
 class AptLR(ComboRoom):
-  def __init__(self, x, y,
-               features = [featureLib.Bookshelf(books=[
-                 books.furiouslyHappy,
-                 books.madnessBipolar,
-                 books.poeTalesPoems,
-                 books.firstStep],
-                 desc = story.interactions["bsAPTLR"],
-                 intro = story.featureIntros["aptLRBookshelf"]
-                )]):
-    super().__init__(x, y, features,
+  def __init__(self, x, y):
+    super().__init__(x, y, 
+                     features = [
+                       featureLib.Bookshelf(
+                         room=self,
+                         books=[
+                           featureLib.Book(room=self, **books.furiouslyHappy),
+                           featureLib.Book(room=self, **books.madnessBipolar),
+                           featureLib.Book(room=self, **books.poeTalesPoems),
+                           featureLib.Book(room=self, **books.firstStep)
+                         ],
+                         desc = story.interactions["bsAPTLR"],
+                         intro = story.featureIntros["aptLRBookshelf"]
+                       )
+                     ],
                      intro = "is your living room.")
   def intro_text(self):
     return story.roomIntro["AptLR"] + super().intro_text()
@@ -131,7 +137,7 @@ you ate? The days are starting to blur together.")
 class AptBath(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y, 
-                     features = [featureLib.MagicMirror()],
+                     features = [featureLib.MagicMirror(room=self)],
                      intro="is your bathroom.")
   def intro_text(self):
     curCount = self.features[0].count
@@ -140,7 +146,8 @@ class AptBath(ComboRoom):
 
 class FITest(ComboRoom):
   def __init__(self, x, y, 
-               features=[featureLib.TestFeat()], 
                items=[], 
                intro='is another room'):
-    super().__init__(x, y, features=features, items=items, intro=intro)
+    super().__init__(x, y, 
+                     features=[featureLib.TestFeat(room=self)], 
+                     items=items, intro=intro)

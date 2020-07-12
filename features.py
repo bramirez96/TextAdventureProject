@@ -5,12 +5,14 @@ import items as itemLib
 # BASE FEATURES 
 
 class Feature:
-  def __init__(self, 
+  def __init__(self,
+               room,      # features need to know what room they're in for full functionality
                desc,      # block of text to print out at beginning of interaction 
                intro,     # sentence or two added to room intro. should have a default
                tag,       # single word lowercase descriptor for cli
                items = [] # optional list of items found in the feature
                ):
+    self.room  = room
     self.tag   = tag.lower()
     self.desc  = desc
     self.intro = intro
@@ -24,12 +26,13 @@ class Feature:
 
 class Bookshelf(Feature):
   def __init__(self,
+               room,
                desc  = story.interactions["bookshelfDEF"], # default
                intro = "You see a bookshelf.", # default
                books = [], #default to no books
                items = []):
     self.books = books
-    super().__init__(desc, intro, items=items, tag="bookshelf")
+    super().__init__(room, desc, intro, items=items, tag="bookshelf")
   def interact(self, player):
     # need to be able to see the bookshelf and interact ->
     # interaction should display the available books and an input
@@ -58,14 +61,16 @@ class Bookshelf(Feature):
       self.books[choice].interact(player)
 
 class Book(Feature):
-  def __init__(self, title, author, text, # specific book info
+  def __init__(self,
+               room,
+               title, author, text, # specific book info
                desc = story.interactions["bookDEF"], 
                intro = "You see a book.", 
                items = []):
     self.title = title
     self.author = author
     self.text = text
-    super().__init__(desc, intro, items=items, tag="book")
+    super().__init__(room=room, desc=desc, intro=intro, items=items, tag="book")
   def __str__(self):
     # initialize helpful variables for printing
     box_length = 0
@@ -91,8 +96,7 @@ class Book(Feature):
     for i, line in enumerate(self.text.splitlines()):
       # ignoring first line of text block (which is blank)
       # add each individual text line with the proper proper length
-      if i != 0:
-         newString = newString + f"= {line:<{box_length}s} =\n"
+      newString = newString + f"= {line:<{box_length}s} =\n"
     newString += dotline # add dots
     newString += borders # add border
     return newString     # return text readout
@@ -107,11 +111,12 @@ class Book(Feature):
 # Story Specific Features
 class MagicMirror(Feature):
   def __init__(self,
+               room,
                desc = story.interactions["mirror1"], 
                intro = story.interactions["mirrorIntro1"], 
                items = []):
     self.count = 1
-    super().__init__(desc, intro, items=items, tag="mirror")
+    super().__init__(room, desc, intro, items=items, tag="mirror")
   def interact(self, player):
     clear()
     borderpr(self.desc)
@@ -128,12 +133,13 @@ class MagicMirror(Feature):
       
       
 class TestFeat(Feature):
-  def __init__(self, 
+  def __init__(self,
+               room,
                desc = "This is a test", 
                intro = "You see a tEST", 
                tag = "test", 
                items=[itemLib.Screwdriver()]):
-    super().__init__(desc, intro, tag, items=items)
+    super().__init__(room, desc, intro, tag, items=items)
   def interact(self, player):
     # currently this will work the first time,
     # but interacting again will cause a crash.

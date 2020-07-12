@@ -111,7 +111,7 @@ She stops. Slowly, as if she has a secret that you were
 never destined to know, her lips turn up into a cruel,
 inhuman smile. Raising her hand, she beckons you near.
 
-"What are you?" you ask, barely managing a whisper.
+"What are you?" you ask, now barely managing a whisper.
 
 Her smile softens. Cocking her head as if examining you
 closer, she laughs as she turns and runs.\
