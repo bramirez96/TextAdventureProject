@@ -22,7 +22,7 @@ class Gum(Item):
                      intro=intro)
 
 class Screwdriver(Item):
-  def __init__(self, intro):
+  def __init__(self, intro = "It's a screwdriver"):
     super().__init__(name="Screwdriver",
                      tag="screwdriver",
                      desc="this could come in handy", 

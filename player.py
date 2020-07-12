@@ -55,4 +55,10 @@ class Player:
   def interact(self, feature):
     pause(f"You look closer at the {feature.tag}...")
     feature.interact(self)
+  
+  def discoverItem(self, item, feature):
+    pause(f"You find -{item.name}- in the {feature.tag}.")
+    # feature should drop item
+    item.getItem(self)
+    feature.dropItem(item)
     

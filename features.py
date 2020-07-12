@@ -1,6 +1,6 @@
 from helpers import pause, prompt, borderpr, clear
 import story
-import items
+import items as itemLib
 
 # BASE FEATURES 
 
@@ -19,6 +19,8 @@ class Feature:
     # all actions are dispatched through the player class
     # each feature should hve unique interactions
     raise NotImplementedError()
+  def dropItem(self, item):
+    self.items.remove(item)
 
 class Bookshelf(Feature):
   def __init__(self,
@@ -124,3 +126,23 @@ class MagicMirror(Feature):
       self.desc = story.interactions[f"mirror{self.count}"]
       self.intro = story.interactions[f"mirrorIntro{self.count}"]
       
+      
+class TestFeat(Feature):
+  def __init__(self, 
+               desc = "This is a test", 
+               intro = "You see a tEST", 
+               tag = "test", 
+               items=[itemLib.Screwdriver()]):
+    super().__init__(desc, intro, tag, items=items)
+  def interact(self, player):
+    # currently this will work the first time,
+    # but interacting again will cause a crash.
+    # implement
+    clear()
+    borderpr(self.desc)
+    pause()
+    if len(self.items) > 0:
+      player.discoverItem(self.items[0], self)
+    else:
+      borderpr("There is nothing intersting here.")
+    pause()

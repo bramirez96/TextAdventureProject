@@ -49,4 +49,13 @@ class Interact(Action):
                      name=f"Look at {feature.tag}", 
                      hotkey=f"look {feature.tag}", 
                      feature=feature)
+
+class DiscoverItem(Action):
+  def __init__(self, item, room, feature):
+    super().__init__(method=Player.discoverItem,
+                     name=f"Discover the {item.tag}", 
+                     hotkey=f"search {feature.tag}",
+                     item=item,
+                     room=room,
+                     feature=feature)
     

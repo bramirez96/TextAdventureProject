@@ -1,4 +1,6 @@
-import items, actions, world, features, books, story
+import actions, world, books, story
+import features as featureLib
+import items as itemLib
 
 class Room:
   def __init__(self, x, y, intro):
@@ -39,6 +41,8 @@ class Room:
     return moves
   def dropItem(self, item):
     raise NotImplementedError()
+  def findItem(self, item):
+    raise NotImplementedError()
 
 
 class ComboRoom(Room):
@@ -66,7 +70,7 @@ class ComboRoom(Room):
   def dropItem(self, item):
     # remove the item from the room when player picks it up
     self.items.remove(item)
-  def addItem(self, item):
+  def findItem(self, item):
     self.items.append(item)
   def intro_text(self):
     self.adjacent_moves()
@@ -88,7 +92,7 @@ class ComboRoom(Room):
 class AptBed(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y,
-                     features = [features.Bookshelf(
+                     features = [featureLib.Bookshelf(
                        books=[books.aliceInWonderland],
                        desc = story.interactions["bsAPTBR"],
                        intro = story.featureIntros["aptBRBookshelf"]
@@ -102,7 +106,7 @@ back up in bed right now.")
 
 class AptLR(ComboRoom):
   def __init__(self, x, y,
-               feature = [features.Bookshelf(books=[
+               features = [featureLib.Bookshelf(books=[
                  books.furiouslyHappy,
                  books.madnessBipolar,
                  books.poeTalesPoems,
@@ -110,7 +114,7 @@ class AptLR(ComboRoom):
                  desc = story.interactions["bsAPTLR"],
                  intro = story.featureIntros["aptLRBookshelf"]
                 )]):
-    super().__init__(x, y, feature,
+    super().__init__(x, y, features,
                      intro = "is your living room.")
   def intro_text(self):
     return story.roomIntro["AptLR"] + super().intro_text()
@@ -118,7 +122,7 @@ class AptLR(ComboRoom):
 class AptKit(ComboRoom):
   def __init__(self, x , y):
     super().__init__(x, y, 
-                     items=[items.Gum(story.items["aptKitGum"])],
+                     items=[itemLib.Gum(story.items["aptKitGum"])],
                      intro="is your kitchen. When was the last time\n\
 you ate? The days are starting to blur together.")
   def intro_text(self):
@@ -127,9 +131,16 @@ you ate? The days are starting to blur together.")
 class AptBath(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y, 
-                     features = [features.MagicMirror()],
+                     features = [featureLib.MagicMirror()],
                      intro="is your bathroom.")
   def intro_text(self):
     curCount = self.features[0].count
     text = story.roomIntro[f"AptBath{curCount}"] + super().intro_text()
     return text
+
+class FITest(ComboRoom):
+  def __init__(self, x, y, 
+               features=[featureLib.TestFeat()], 
+               items=[], 
+               intro='is another room'):
+    super().__init__(x, y, features=features, items=items, intro=intro)
