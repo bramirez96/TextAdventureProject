@@ -179,13 +179,19 @@ You manage to find one book on the bottom shelf.
 about it fills you with a deep dread.",
   "mirrorIntro3": """\
 The mirror is still on the wall, but you have no reflection.\
+""",
+  "testRoomFI": """\
+This is a test room.\
 """
 }
 
 items = {
-  "aptKitGum": """\
+  "aptKitGum": """
 Next to a stack of unopened mail on the kitchen table,
 you see a piece of gum.\
+""",
+  "testSD": """
+It's a screwdriver, existing for tests only.\
 """
 }
 

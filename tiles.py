@@ -74,7 +74,7 @@ class ComboRoom(Room):
     self.items.append(item)
   def intro_text(self):
     self.adjacent_moves()
-    newText = ""
+    newText = "\n"
     for feature in self.features:
       newText += "\n" + feature.intro
     for item in self.items:
@@ -87,7 +87,7 @@ class ComboRoom(Room):
       newText += f"\n\nTo the south {self.south.intro}"
     if self.west:
       newText += f"\n\nTo the west {self.west.intro}"
-    return "\n" + newText 
+    return newText
     
 class AptBed(ComboRoom):
   def __init__(self, x, y):
@@ -127,7 +127,8 @@ class AptLR(ComboRoom):
 
 class AptKit(ComboRoom):
   def __init__(self, x , y):
-    super().__init__(x, y, 
+    super().__init__(x, y,
+                     features = [featureLib.GenericSink(self)],
                      items=[itemLib.Gum(story.items["aptKitGum"])],
                      intro="is your kitchen. When was the last time\n\
 you ate? The days are starting to blur together.")
@@ -147,7 +148,9 @@ class AptBath(ComboRoom):
 class FITest(ComboRoom):
   def __init__(self, x, y, 
                items=[], 
-               intro='is another room'):
+               intro='is a test room'):
     super().__init__(x, y, 
                      features=[featureLib.TestFeat(room=self)], 
                      items=items, intro=intro)
+  def intro_text(self):
+    return story.interactions["testRoomFI"] + super().intro_text()

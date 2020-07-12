@@ -130,16 +130,28 @@ class MagicMirror(Feature):
     else:
       self.desc = story.interactions[f"mirror{self.count}"]
       self.intro = story.interactions[f"mirrorIntro{self.count}"]
-      
+
+class GenericSink(Feature):
+  def __init__(self, 
+               room, 
+               desc = "There's a sink chillin over there.", 
+               intro = "You see a sink.", 
+               items=[]):
+    super().__init__(room, desc, intro, tag="sink", items=items)    
+  def interact(self, player):
+    clear()
+    borderpr(self.desc)
+    pause()
       
 class TestFeat(Feature):
   def __init__(self,
                room,
-               desc = "This is a test", 
-               intro = "You see a tEST", 
-               tag = "test", 
-               items=[itemLib.Screwdriver()]):
-    super().__init__(room, desc, intro, tag, items=items)
+               items=[itemLib.Screwdriver(story.items["testSD"])]):
+    super().__init__(room, 
+                     desc="You're in a room with a test.", 
+                     intro="There's a test in the room.", 
+                     tag="test", 
+                     items=items)
   def interact(self, player):
     # currently this will work the first time,
     # but interacting again will cause a crash.
@@ -150,5 +162,4 @@ class TestFeat(Feature):
     if len(self.items) > 0:
       player.discoverItem(self.items[0], self)
     else:
-      borderpr("There is nothing intersting here.")
-    pause()
+      pause("There is nothing intersting here.")
