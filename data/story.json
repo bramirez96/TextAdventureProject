@@ -11,7 +11,12 @@
         "intro": "You see a bookshelf."
       },
       "book": {
+        "desc": "There's nothing in here.",
         "intro": "You see a book."
+      },
+      "sink": {
+        "desc": "There's nothing special about the sink.",
+        "intro": "You see a sink."
       }
     },
     "rooms": {
@@ -57,7 +62,7 @@
         },
         "items": {
           "gum": {
-            "intro": "Next to a stack of unopened mail on the kitchen table, you see a piece of gum."
+            "intro": "\nNext to a stack of unopened mail on the kitchen table,\nyou see a piece of gum."
           }
         }
       },
@@ -70,7 +75,7 @@
         "desc": [
           "You look around. It's a fairly standard bathroom with a\nsink, toilet, and a shower. The trashcan is overflowing,\nand the hamper in the corner is nearly there as well.\n\nYou stop and listen as you hear the tapping again, this\ntime louder than ever. You know it's nearby. You can't\nshake the eerie feeling that you're in a fishtank, and\nsomeone is tapping against your glass.\n\nWhat on Earth is that sound?? All at once it stops.",
           "Standing in the bathroom, you ponder what you saw in the mirror.\n\nIt's impossible to see your reflection blink, right? Some part of\nyou wants to look again but the fear you feel is almost tangible.\n\nAs you sit, attempting to rationalize what you've just seen,\nthe tapping begins again - slowly at first, but building rapidly,\nuntil it becomes a ferocious pounding.\n\nYour heart races as you contemplate your next move.",
-          "Momentarily frozen in shock, you consider what just happened.\n\nWhere your apartment once felt safe, you now feel as though you\nare under attack by something dark and sinister. Reflections\ndon't just run away... they can't! Right?\n\nThinking back a few years, you try and remember what those old\nhallucinations felt like. They felt real enough at the time, but\nthey never looked like this. This was new.\n\nYour heart races as you contemplate your next move."
+          "Momentarily frozen in shock, you consider what just happened.\n\nWhere your apartment once felt safe, you now feel as though you\nare under attack by something dark and sinister. Reflections\ndon't just run away... they can't! Right?\n\nThinking back a few years, you try and remember what those old\nhallucinations felt like. They felt real enough at the time, but\nthey never looked like this. This was new.\n\nYour feel your heart pounding in your head."
         ],
         "features": {
           "mirror": {

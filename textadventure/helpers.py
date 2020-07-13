@@ -61,7 +61,3 @@ def borderpr(text):
     newText += border
 
     print(newText)
-
-x = "Alice asked the Cheshire Cat, who was sitting in a tree,\n\"What road do I take?\"\nThe cat asked, \"Where do you want to go?\"\n\"I don’t know,\" Alice answered.\n\"Then,\" said the cat, \"it really doesn’t matter, does it?\""
-
-borderpr(x)

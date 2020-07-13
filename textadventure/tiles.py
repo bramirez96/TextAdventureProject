@@ -1,6 +1,6 @@
-import actions, world, books, story
-import features as featureLib
-import items as itemLib
+import actions, world, story,\
+  features as featureLib, items as itemLib
+from books import books
 
 class Room:
   def __init__(self, x, y, intro):
@@ -49,7 +49,7 @@ class ComboRoom(Room):
   def __init__(self, x, y,
                features = [], 
                items = [],
-               intro = "is another room"):
+               intro = story.defaults["rooms"]["intro"]):
     super().__init__(x, y, intro=intro)
     self.features = features
     self.items = items
@@ -96,15 +96,15 @@ class AptBed(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y,
                      features = [featureLib.Bookshelf(
-                       room=self,
-                       books=[featureLib.Book(room=self, **books.aliceInWonderland)],
-                       desc = story.interactions["bsAPTBR"],
-                       intro = story.featureIntros["aptBRBookshelf"]
+                       room  = self,
+                       books = [featureLib.Book(room=self, **books["alice"])],
+                       desc  = story.zones["apartment"]["bedroom"]["features"]["bookshelf"]["desc"],
+                       intro = story.zones["apartment"]["bedroom"]["features"]["bookshelf"]["intro"]
                      )],
-                     intro = "is your bedroom. You'd love to curl \n\
-back up in bed right now.")
+                     intro = story.zones["apartment"]["bedroom"]["intro"]
+                     )
   def intro_text(self):
-    return story.roomIntro["AptBed"] + super().intro_text()
+    return story.zones["apartment"]["bedroom"]["desc"] + super().intro_text()
   def modify_player(self, player):
     pass
 
@@ -115,45 +115,37 @@ class AptLR(ComboRoom):
                        featureLib.Bookshelf(
                          room=self,
                          books=[
-                           featureLib.Book(room=self, **books.furiouslyHappy),
-                           featureLib.Book(room=self, **books.madnessBipolar),
-                           featureLib.Book(room=self, **books.poeTalesPoems),
-                           featureLib.Book(room=self, **books.firstStep)
+                           featureLib.Book(room=self, **books["furiouslyHappy"]),
+                           featureLib.Book(room=self, **books["madnessBipolar"]),
+                           featureLib.Book(room=self, **books["poeTales"]),
+                           featureLib.Book(room=self, **books["firstStep"])
                          ],
-                         desc = story.interactions["bsAPTLR"],
-                         intro = story.featureIntros["aptLRBookshelf"]
+                         desc  = story.zones["apartment"]["livingRoom"]["features"]["bookshelf"]["desc"],
+                         intro = story.zones["apartment"]["livingRoom"]["features"]["bookshelf"]["intro"],
                        )
                      ],
-                     intro = "is your living room.")
+                     intro = story.zones["apartment"]["livingRoom"]["intro"],
+                     )
   def intro_text(self):
-    return story.roomIntro["AptLR"] + super().intro_text()
+    return story.zones["apartment"]["livingRoom"]["desc"] + super().intro_text()
 
 class AptKit(ComboRoom):
   def __init__(self, x , y):
     super().__init__(x, y,
                      features = [featureLib.GenericSink(self)],
-                     items=[itemLib.Gum(story.items["aptKitGum"])],
-                     intro="is your kitchen. When was the last time\n\
-you ate? The days are starting to blur together.")
+                     items=[itemLib.Gum(story.zones["apartment"]["kitchen"]["items"]["gum"]["intro"])],
+                     intro=story.zones["apartment"]["kitchen"]["intro"]
+                     )
   def intro_text(self):
-    return story.roomIntro["AptKit"] + super().intro_text()
+    return story.zones["apartment"]["kitchen"]["desc"] + super().intro_text()
 
 class AptBath(ComboRoom):
   def __init__(self, x, y):
     super().__init__(x, y, 
                      features = [featureLib.MagicMirror(room=self)],
-                     intro="is your bathroom.")
+                     intro=story.zones["apartment"]["bathroom"]["intro"][0])
   def intro_text(self):
     curCount = self.features[0].count
-    text = story.roomIntro[f"AptBath{curCount}"] + super().intro_text()
+    self.intro = story.zones["apartment"]["bathroom"]["intro"][curCount]
+    text = story.zones["apartment"]["bathroom"]["desc"][curCount] + super().intro_text()
     return text
-
-class FITest(ComboRoom):
-  def __init__(self, x, y, 
-               items=[], 
-               intro='is a test room'):
-    super().__init__(x, y, 
-                     features=[featureLib.TestFeat(room=self)], 
-                     items=items, intro=intro)
-  def intro_text(self):
-    return story.interactions["testRoomFI"] + super().intro_text()

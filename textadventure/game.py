@@ -1,5 +1,5 @@
 import world
-import story
+from story import messages
 from player import Player
 from helpers import pause, borderpr, prompt, clear
 
@@ -8,9 +8,8 @@ def play():
     world.load_tiles()
     player = Player()
     clear()
-    for i in story.intro:
-        borderpr(i)
-        pause()
+    borderpr(messages["loadingScreen"])
+    pause()
 
     while player.isAlive and not player.victory:
         # run game loop
@@ -32,5 +31,4 @@ def play():
             pause("You're not sure how you'd do that...")
 
 
-if __name__ == "__main__":
-    play()
+play()
