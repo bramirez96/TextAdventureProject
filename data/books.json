@@ -1,0 +1,27 @@
+{
+  "alice": {
+    "title": "Alice in Wonderland",
+    "author": "Lewis Carroll",
+    "text": "Alice asked the Cheshire Cat, who was sitting in a tree,\n\"What road do I take?\"\nThe cat asked, \"Where do you want to go?\"\n\"I don’t know,\" Alice answered.\n\"Then,\" said the cat, \"it really doesn’t matter, does it?\"\n"
+  },
+  "poeTales": {
+    "title": "Complete Tales and Poems",
+    "author": "Edgar Allan Poe",
+    "text": "Men have called me mad; but the question is not yet settled,\nwhether madness is or is not the loftiest intelligence -\nwhether much that is glorious - whether all that is profound -\ndoes not spring from disease of thought - from moods of mind\nexalted at the expense of the general intellect."
+  },
+  "madnessBipolar": {
+    "title": "Madness: A Bipolar Life",
+    "author": "Marya Hornbacher",
+    "text": "When you are mad, mad like this, you don't know it.\nReality is what you see. When what you see shifts, departing from\nanyone else's reality, it's still reality to you."
+  },
+  "furiouslyHappy": {
+    "title": "Furiously Happy",
+    "author": "Jenny Lawson",
+    "text": "When you come out of the grips of a depression there is an\nincredible relief, but not one you feel allowed to celebrate.\nInstead, the feeling of victory is replaced with anxiety that\nit will happen again, and with shame and vulnerability when\nyou see how your illness affected your family, your work,\neverything left untouched while you struggled to survive."
+  },
+  "firstStep": {
+    "title": "The First Step",
+    "author": "Emm Roy",
+    "text": "Sometimes monsters are invisible, and\nsometimes demons attack you from the inside.\nJust because you cannot see the claws and the teeth\ndoes not mean they aren’t ripping through me.\nPain does not need to be seen to be felt."
+  }
+}
