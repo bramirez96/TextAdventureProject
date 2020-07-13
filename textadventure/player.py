@@ -33,7 +33,7 @@ class Player:
           f"* Basic Controls                    *\n"
           f"* go   -> move to a different room  *\n"
           f"* i    -> view inventory            *\n"
-          f"* get  -> pick up an item           *\n"
+          f"* take -> pick up an item           *\n"
           f"* look -> inspect a feature closely *\n"
           f"*************************************")
     pause("Press enter to close...")

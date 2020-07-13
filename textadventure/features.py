@@ -2,6 +2,10 @@ from helpers import pause, prompt, borderpr, clear
 import story
 import items as itemLib
 
+# More Specific Naming for Imported Values
+
+featDef = story.defaults["features"]
+
 # BASE FEATURES 
 
 class Feature:
@@ -27,7 +31,7 @@ class Feature:
 class Bookshelf(Feature):
   def __init__(self,
                room,
-               desc  = story.interactions["bookshelfDEF"], # default
+               desc  = featDef["bookshelf"], # default
                intro = "You see a bookshelf.", # default
                books = [], #default to no books
                items = []):
@@ -64,7 +68,7 @@ class Book(Feature):
   def __init__(self,
                room,
                title, author, text, # specific book info
-               desc = story.interactions["bookDEF"], 
+               desc = featDef["book"]["desc"], 
                intro = "You see a book.", 
                items = []):
     self.title = title
@@ -109,57 +113,38 @@ class Book(Feature):
   
   
 # Story Specific Features
+
 class MagicMirror(Feature):
-  def __init__(self,
-               room,
-               desc = story.interactions["mirror1"], 
-               intro = story.interactions["mirrorIntro1"], 
+  def __init__(self, room,
                items = []):
-    self.count = 1
-    super().__init__(room, desc, intro, items=items, tag="mirror")
+    self.count = 0
+    self.story = story.zones["apartment"]["bathroom"]["features"]["mirror"]
+    super().__init__(room, 
+                     desc  = self.story["desc"][self.count], 
+                     intro = self.story["intro"][self.count], 
+                     items=items, tag="mirror")
   def interact(self, player):
     clear()
     borderpr(self.desc)
     pause()
     self.count += 1
-    if self.count == 4:
+    if self.count == 3:
       clear()
-      borderpr(story.interactions["falling"])
+      borderpr(self.story["fallingText"])
       player.victory = True
       pause(end=True)
     else:
-      self.desc = story.interactions[f"mirror{self.count}"]
-      self.intro = story.interactions[f"mirrorIntro{self.count}"]
+      self.desc = self.story["desc"][self.count]
+      self.intro = self.story["intro"][self.count]
 
 class GenericSink(Feature):
   def __init__(self, 
                room, 
-               desc = "There's a sink chillin over there.", 
-               intro = "You see a sink.", 
+               desc = featDef["sink"]["desc"], 
+               intro = featDef["sink"]["intro"], 
                items=[]):
     super().__init__(room, desc, intro, tag="sink", items=items)    
   def interact(self, player):
     clear()
     borderpr(self.desc)
     pause()
-      
-class TestFeat(Feature):
-  def __init__(self,
-               room,
-               items=[itemLib.Screwdriver(story.items["testSD"])]):
-    super().__init__(room, 
-                     desc="You're in a room with a test.", 
-                     intro="There's a test in the room.", 
-                     tag="test", 
-                     items=items)
-  def interact(self, player):
-    # currently this will work the first time,
-    # but interacting again will cause a crash.
-    # implement
-    clear()
-    borderpr(self.desc)
-    pause()
-    if len(self.items) > 0:
-      player.discoverItem(self.items[0], self)
-    else:
-      pause("There is nothing intersting here.")

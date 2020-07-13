@@ -2,7 +2,7 @@ _world = {}
 starting_position = (0, 0)
 
 def load_tiles():
-  with open("resources/map.txt", "r") as f:
+  with open("data/map.txt", "r") as f:
     rows = f.readlines()
   x_max = len(rows[0].split())
   for y in range(len(rows)):
