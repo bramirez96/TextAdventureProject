@@ -50,3 +50,33 @@ def prompt(string = "What do you do?"):
 
 def clear():
    os.system("cls")
+
+
+
+
+def newprinter(text):
+  # text should be split on newline chars
+  x = text.split("\n")
+  length    = 0
+  tablength = 0
+  newText = ""
+  for line in x:
+    f = line[1:].split("\t")
+    if len(f) > 1:
+      tablength = len(f[0]) if len(f[0]) > tablength else tablength
+    length = len(line) if len(line) > length else length
+  length -= 1
+  border = f"=={'':=<{length}}==\n"
+  newText += border
+  for line in x:
+    if line == "":
+      newText += f"= {'':{length}} =\n"
+    else:
+      align = line[0]
+      f = line[1:].split("\t")
+      if len(f) > 1:
+        newText += f"= {f[0]:{tablength}} {f[1]:{length - tablength - 1}} =\n"
+      else:
+        newText += f"= {line[1:]:{align}{length}} =\n"
+  newText += border
+  return newText

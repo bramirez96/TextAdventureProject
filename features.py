@@ -2,6 +2,10 @@ from helpers import pause, prompt, borderpr, clear
 import story
 import items as itemLib
 
+# More Specific Naming for Imported Values
+
+featDef = story.defaults["features"]
+
 # BASE FEATURES 
 
 class Feature:
@@ -27,7 +31,7 @@ class Feature:
 class Bookshelf(Feature):
   def __init__(self,
                room,
-               desc  = story.interactions["bookshelfDEF"], # default
+               desc  = featDef["bookshelf"], # default
                intro = "You see a bookshelf.", # default
                books = [], #default to no books
                items = []):
@@ -109,11 +113,10 @@ class Book(Feature):
   
   
 # Story Specific Features
+mirrorStory = story.zones["apartment"]
+
 class MagicMirror(Feature):
-  def __init__(self,
-               room,
-               desc = story.interactions["mirror1"], 
-               intro = story.interactions["mirrorIntro1"], 
+  def __init__(self, room, desc, intro, 
                items = []):
     self.count = 1
     super().__init__(room, desc, intro, items=items, tag="mirror")

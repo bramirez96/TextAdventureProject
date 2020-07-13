@@ -57,7 +57,7 @@ class ComboRoom(Room):
     # includes all base actions for a tile
     moves = super().available_actions()
     
-    # needs to include hotkey for ALL features in room
+    # needs to append hotkeys for ALL features in room
     for feature in self.features:
       moves.append(actions.Interact(feature))
     
@@ -71,8 +71,11 @@ class ComboRoom(Room):
     # remove the item from the room when player picks it up
     self.items.remove(item)
   def findItem(self, item):
+    # add item to room when it;s discovered in a feature
     self.items.append(item)
   def intro_text(self):
+    # run this function purely to load adjacent tiles so that
+    # their intros are included
     self.adjacent_moves()
     newText = "\n"
     for feature in self.features:

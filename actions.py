@@ -39,7 +39,7 @@ class GetItem(Action):
   def __init__(self, item, room):
     super().__init__(method=Player.getItem, 
                      name="Pickup item", 
-                     hotkey=f"get {item.tag}", 
+                     hotkey=f"take {item.tag}", 
                      item=item, 
                      room=room)
     
