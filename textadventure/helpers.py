@@ -1,82 +1,67 @@
 import os
 
-def pause(message = "Press enter to continue...\n", end =False):
-  if end:
-    input("To be continued...")
-  else:
-    input(message)
 
-def borderpr(string):
-    # initialize helpful variables for printing
-    box_length = 0
-    dots = "..."
-    blanks = ""
-    borders = ""
-    
-    # get max line length in specific text
-    for line in string.splitlines():
-      if len(line) > box_length:
-        box_length = len(line)
-    
-    # creating dividers based on variable length
-    dotline = f"= {dots:^{box_length}s} =\n"
-    blankline = f"= {blanks:{box_length}s} =\n"
-    
-    # create border based on length of text
-    for x in range(box_length + 4):
-      borders += "="
-    
-    # add a border
-    newString = borders + "\n"
-    
-    # add dots around text
-    newString += dotline
-    
-    # read in each line with a fixed length and border
-    for i, line in enumerate(string.splitlines()):
-      newString = newString + f"= {line:<{box_length}s} =\n"
-      
-    # add dots and border to the end
-    newString += dotline
-    newString += borders
-    
-    # return formatted string
-    print(newString)
+def pause(message="Press enter to continue...\n", end=False):
+    if end:
+        input("To be continued...")
+    else:
+        input(message)
 
-def prompt(string = "What do you do?"):
-  print(string)
-  x = input(">> ")
-  return x.lower()
+
+def prompt(string="What do you do?"):
+    print(string)
+    x = input(">> ")
+    return x.lower()
+
 
 def clear():
-   os.system("cls")
+    os.system("cls")
 
 
+def borderpr(text):
+    # text should be split on newline chars
+    x = text.split("\n")
 
+    # variables for formatting
+    align = "<"
+    length = 0
+    tablength = 0
+    newText = ""
+    flags = ("<", "^", ">")
 
-def newprinter(text):
-  # text should be split on newline chars
-  x = text.split("\n")
-  length    = 0
-  tablength = 0
-  newText = ""
-  for line in x:
-    f = line[1:].split("\t")
-    if len(f) > 1:
-      tablength = len(f[0]) if len(f[0]) > tablength else tablength
-    length = len(line) if len(line) > length else length
-  length -= 1
-  border = f"=={'':=<{length}}==\n"
-  newText += border
-  for line in x:
-    if line == "":
-      newText += f"= {'':{length}} =\n"
-    else:
-      align = line[0]
-      f = line[1:].split("\t")
-      if len(f) > 1:
-        newText += f"= {f[0]:{tablength}} {f[1]:{length - tablength - 1}} =\n"
-      else:
-        newText += f"= {line[1:]:{align}{length}} =\n"
-  newText += border
-  return newText
+    # loop over data to get relevant lengths for formatting
+    for line in x:
+        f = line[1:].split("\t")
+        if len(f) > 1:
+            tablength = len(f[0]) if len(f[0]) > tablength else tablength
+        length = len(line) if len(line) > length else length
+
+    # create dividers for output
+    border = f"=={'':=<{length}}==\n"
+    dotline = f"= {'...':^{length}} =\n"
+
+    # format the output
+    newText += border
+    newText += dotline
+    for line in x:
+        # fixes issue with blank lines being skipped
+        if line == "":
+            newText += f"= {'':{length}} =\n"
+        else:
+            # if first char is alingment flag, remove it and store for formatting use
+            if line[0] in flags:
+                align = line[0]
+                line = line[1:]
+            f = line.split("\t")
+            if len(f) > 1:
+                newText += f"= {f[0]:{tablength}} {f[1]:{length - tablength - 1}} =\n"
+            else:
+                newText += f"= {line:{align}{length}} =\n"
+    newText += dotline
+    newText += border
+
+    print(newText)
+
+x = "Alice asked the Cheshire Cat, who was sitting in a tree,\n\"What road do I take?\"\nThe cat asked, \"Where do you want to go?\"\n\"I don’t know,\" Alice answered.\n\"Then,\" said the cat, \"it really doesn’t matter, does it?\""
+
+borderpr(x)
