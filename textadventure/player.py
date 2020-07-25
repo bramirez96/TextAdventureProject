@@ -21,12 +21,16 @@ class Player:
     self.location_y += dy
   def moveNorth(self):
     self.move(dx = 0, dy = -1)
+    pause("You head north...")
   def moveEast(self):
     self.move(dx = 1, dy = 0)
+    pause("You head east...")
   def moveSouth(self):
     self.move(dx = 0, dy = 1)
+    pause("You head south...")
   def moveWest(self):
     self.move(dx = -1, dy = 0)
+    pause("You head west...")
       
   def getHelp(self):
     print(f"*************************************\n"
@@ -61,4 +65,11 @@ class Player:
     # feature should drop item
     feature.dropItem(item)
     feature.room.findItem(item)
-    
+
+  def unlockRoom(self, room):
+    # if you have the item, unlock the room!
+    for item in self.items:
+      if item.tag == key and item.code == room.code:
+        # unlock the room
+        pass
+    pass

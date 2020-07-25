@@ -91,6 +91,14 @@ class ComboRoom(Room):
     if self.west:
       newText += f"\n\nTo the west {self.west.intro}"
     return newText
+
+class LockedRoom(ComboRoom):
+  def __init__(self, x, y, 
+               features=[], 
+               items=[], 
+               intro=story.defaults['rooms']['intro']):
+    super().__init__(x, y, features=features, items=items, intro=intro)
+
     
 class AptBed(ComboRoom):
   def __init__(self, x, y):
