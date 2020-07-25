@@ -27,54 +27,12 @@ class Feature:
     def interact(self, player):
         # all actions are dispatched through the player class
         # each feature should hve unique interactions
-        raise NotImplementedError()
+        clear()
+        borderpr(self.desc)
+        pause()
 
     def dropItem(self, item):
         self.items.remove(item)
-
-
-class Bookshelf(Feature):
-    def __init__(self, room, data):
-        self.books = []
-        for book_key in data["books"]:
-            self.books.append(getattr(books, book_key))
-        desc = data["desc"]
-        intro = data["intro"]
-        self.items = data["items"]
-        super().__init__(room, desc, intro, tag="bookshelf")
-
-    def interact(self, player):
-        # need to be able to see the bookshelf and interact ->
-        # interaction should display the available books and an input
-        # input should select which book to read <- EASTER EGGS?
-        clear()
-        choice = 0
-        if len(self.books) > 1:
-            borderpr(self.desc)
-            for i, book in enumerate(self.books):
-                print(f"{i + 1}: {book.title}")
-            print(f"n: I don't want to read")
-            usr_input = prompt()
-            if (usr_input != "n"):
-                choice = int(usr_input) - 1
-            else:
-                choice = -1
-        elif len(self.books) == 1:
-            borderpr(self.desc)
-            usr_input = prompt(
-                f"Would you like to read \"{self.books[0].title}\"? (y/n)")
-            if usr_input == "n":
-                choice = -1
-        else:
-            borderpr(self.desc)
-            prompt("There are no books on the shelf...")
-            return
-
-        if choice == -1:
-            pause("You don't feel like reading right now...")
-            pass
-        else:
-            self.books[choice].interact(player)
 
 
 class Book(Feature):
@@ -127,23 +85,67 @@ class Book(Feature):
         pause("You put the book down.")  # pause for immersion
 
 
+class Bookshelf(Feature):
+    def __init__(self, room, data):
+        self.books = []
+        for book_key in data["books"]:
+            self.books.append(Book(room, **books.books[book_key]))
+        desc = data["desc"]
+        intro = data["intro"]
+        items = data["items"]
+        super().__init__(room, desc, intro, tag="bookshelf", items=items)
+
+    def interact(self, player):
+        # need to be able to see the bookshelf and interact ->
+        # interaction should display the available books and an input
+        # input should select which book to read <- EASTER EGGS?
+        clear()
+        choice = 0
+        if len(self.books) > 1:
+            borderpr(self.desc)
+            for i, book in enumerate(self.books):
+                print(f"{i + 1}: {book.title}")
+            print(f"n: I don't want to read")
+            usr_input = prompt()
+            if (usr_input != "n"):
+                choice = int(usr_input) - 1
+            else:
+                choice = -1
+        elif len(self.books) == 1:
+            borderpr(self.desc)
+            usr_input = prompt(
+                f"Would you like to read \"{self.books[0].title}\"? (y/n)")
+            if usr_input == "n":
+                choice = -1
+        else:
+            borderpr(self.desc)
+            prompt("There are no books on the shelf...")
+            return
+
+        if choice == -1:
+            pause("You don't feel like reading right now...")
+            pass
+        else:
+            self.books[choice].interact(player)
+
+
 # Story Specific Features
 
 class MagicMirror(Feature):
-    def __init__(self, room,
-                 items=[]):
+    def __init__(self, room, data):
         self.count = 0
-        self.story = story.zones["apartment"]["bathroom"]["features"]["mirror"]
+        self.story = data
         super().__init__(room,
                          desc=self.story["desc"][self.count],
                          intro=self.story["intro"][self.count],
-                         items=items, tag="mirror")
+                         tag="mirror")
 
     def interact(self, player):
         clear()
         borderpr(self.desc)
         pause()
         self.count += 1
+        self.room.increment()
         if self.count == 3:
             clear()
             borderpr(self.story["fallingText"])
@@ -154,15 +156,9 @@ class MagicMirror(Feature):
             self.intro = self.story["intro"][self.count]
 
 
-class GenericSink(Feature):
-    def __init__(self,
-                 room,
-                 desc=featDef["sink"]["desc"],
-                 intro=featDef["sink"]["intro"],
-                 items=[]):
+class Sink(Feature):
+    def __init__(self, room, data):
+        intro = data["intro"]
+        desc = data["desc"]
+        items = data["items"]
         super().__init__(room, desc, intro, tag="sink", items=items)
-
-    def interact(self, player):
-        clear()
-        borderpr(self.desc)
-        pause()

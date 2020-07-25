@@ -60,9 +60,7 @@ class Room:
 
 class ComboRoom(Room):
     def __init__(self, x, y, data):
-        #  features=[],
-        #  items=[],
-        #  intro=story.defaults["rooms"]["intro"]):
+        self.desc = data["desc"]
         super().__init__(x, y, intro=data["intro"])
         self.features = []
         self.items = []
@@ -73,9 +71,8 @@ class ComboRoom(Room):
             )
         for item_name in data["items"]:
             self.items.append(getattr(itemLib, item_name)(
-                data["items"][item_name]
+                **data["items"][item_name]
             ))
-    # self.items = data.items
 
     def available_actions(self):
         # includes all base actions for a tile
@@ -104,12 +101,12 @@ class ComboRoom(Room):
         # run this function purely to load adjacent tiles so that
         # their intros are included
         self.adjacent_moves()
-        newText = "\n"
-        print(self.features)
-        # for feature in self.features:
-        #     newText += "\n" + feature.intro
-        # for item in self.items:
-        #     newText += "\n" + item.intro
+        newText = "\n" + self.desc + "\n"
+
+        for feature in self.features:
+            newText += "\n" + feature.intro
+        for item in self.items:
+            newText += "\n" + item.intro
         if self.north:
             newText += f"\n\nTo the north {self.north.intro}"
         if self.east:
@@ -130,53 +127,6 @@ class ComboRoom(Room):
 
 
 # # Zone 1: Apartment
-
-
-# class AptBed(ComboRoom):
-#     def __init__(self, x, y):
-#         super().__init__(x, y,
-#                          features=[featureLib.Bookshelf(
-#                              room=self,
-#                              books=[featureLib.Book(
-#                                  room=self, **books["alice"])],
-#                              desc=story.zones["apartment"]["bedroom"]["features"]["bookshelf"]["desc"],
-#                              intro=story.zones["apartment"]["bedroom"]["features"]["bookshelf"]["intro"]
-#                          )],
-#                          intro=story.zones["apartment"]["bedroom"]["intro"]
-#                          )
-
-#     def intro_text(self):
-#         return story.zones["apartment"]["bedroom"]["desc"] + super().intro_text()
-
-#     def modify_player(self, player):
-#         pass
-
-
-# class AptLR(ComboRoom):
-#     def __init__(self, x, y):
-#         super().__init__(x, y,
-#                          features=[
-#                              featureLib.Bookshelf(
-#                                  room=self,
-#                                  books=[
-#                                      featureLib.Book(
-#                                          room=self, **books["furiouslyHappy"]),
-#                                      featureLib.Book(
-#                                          room=self, **books["madnessBipolar"]),
-#                                      featureLib.Book(
-#                                          room=self, **books["poeTales"]),
-#                                      featureLib.Book(
-#                                          room=self, **books["firstStep"])
-#                                  ],
-#                                  desc=story.zones["apartment"]["livingRoom"]["features"]["bookshelf"]["desc"],
-#                                  intro=story.zones["apartment"]["livingRoom"]["features"]["bookshelf"]["intro"],
-#                              )
-#                          ],
-#                          intro=story.zones["apartment"]["livingRoom"]["intro"],
-#                          )
-
-#     def intro_text(self):
-#         return story.zones["apartment"]["livingRoom"]["desc"] + super().intro_text()
 
 
 # class AptKit(ComboRoom):
