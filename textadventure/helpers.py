@@ -46,6 +46,9 @@ def borderpr(text):
     for line in x:
         # fixes issue with blank lines being skipped
         if line == "":
+            print(length)
+            if length == 0:
+                break
             newText += f"= {'':{length}} =\n"
         else:
             # if first char is alingment flag, remove it and store for formatting use
