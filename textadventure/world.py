@@ -23,8 +23,15 @@ def load_tiles():
 
             # checks current coordinates
             # TODO needs update to dynamically read room type from json
-            _world[(x, y)] = None if tile_name == "." \
-                else tiles.ComboRoom(x, y, zones[tile_name])
+            if tile_name == ".":
+                # empty tile
+                _world[(x, y)] = None
+            else:
+                # non-empty tile, read the room
+                _world[(x, y)] = getattr(tiles, zones[tile_name]["type"])(x, y, zones[tile_name])
+            
+            #  if tile_name == "." \
+            #     else tiles.ComboRoom(x, y, zones[tile_name])
 
 
 def tile_exists(x, y):

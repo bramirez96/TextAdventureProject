@@ -26,6 +26,7 @@
     },
     "zones": {
         "AptBed": {
+            "type": "ComboRoom",
             "intro": "is your bedroom. You'd love to curl \nback up in bed right now.",
             "desc": "You wake up to a loud blaring sound, just like any\nother day. Reaching over, you turn off your alarm,\nand are plunged into a comforting silence.\n\nRubbing the sleep from your eyes, you look around\nthe dark room before you. The curtains on the window\nare drawn tight, preventing any sunlight from entering.\nIn one corner you can just about make out a pile of\nlaundry on the floor.\n\nYou welcome the darkness.\n\nSomewhere nearby, you can hear a faint but steady tapping.\nYou live alone. You listen harder and the tapping ceases.",
             "features": {
@@ -39,6 +40,7 @@
             "items": {}
         },
         "AptLR": {
+            "type": "ComboRoom",
             "intro": "is your living room.",
             "desc": "You're standing in your living room. Last night's dinner sits\non the coffee table, unfinished. You hear the strange tapping\nsound again, slightly louder than when you woke.\n\nIs it coming from inside your apartment?",
             "features": {
@@ -57,6 +59,7 @@
             "items": {}
         },
         "AptKit": {
+            "type": "ComboRoom",
             "intro": "is your kitchen. When was the last time\nyou ate? The days are starting to blur together.",
             "desc": "You look around. The sink is full of dishes. How long\nhas it been since you've cleaned up? There's no way to\nknow for sure.\n\nYou pause to listen as the tapping starts again. It sounds\nmore distant than it did in the living room.\n\nMaybe you're just hearing things...",
             "features": {
@@ -73,6 +76,7 @@
             }
         },
         "AptBath": {
+            "type": "EventRoom",
             "intro": [
                 "is your bathroom.",
                 "is your bathroom. What just happened?",

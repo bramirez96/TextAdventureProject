@@ -118,6 +118,27 @@ class ComboRoom(Room):
         return newText
 
 
+class EventRoom(ComboRoom):
+    def __init__(self, x, y, data):
+        super().__init__(x, y, data={
+            "desc": data["desc"][0],
+            "intro": data["intro"][0],
+            "features": data["features"],
+            "items": data["items"]
+        })
+        self.story = {
+            "desc": data["desc"],
+            "intro": data["intro"]
+        }
+        self.counter = 0
+
+    def increment(self):
+        self.counter += 1
+        if self.counter < len(self.story["desc"]):
+            self.desc = self.story["desc"][self.counter]
+        if self.counter < len(self.story["intro"]):
+            self.intro = self.story["intro"][self.counter]
+
 # class LockedRoom(ComboRoom):
 #     def __init__(self, x, y,
 #                  features=[],
