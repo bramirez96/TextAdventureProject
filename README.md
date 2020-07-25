@@ -6,10 +6,15 @@ A text adventure game that is yet unnamed and will hopefully become a huge proje
 
 In this release, I'll attempt to adjust tile creation to allow items and features to be auto-loaded from the JSON - with the intention of making the app more scalable and easier to maintain. Current setup is enough to begin creating new story elements.
 
-### Feature Wish List (Potentially Difficult)
+### Under Development
 
-- [ ] Implement lock and key system
-- [ ] Implement item combinations
+* [x] Rooms load features and items from JSON
+* [ ] Implement new room class that can increment its own description and intro
+
+### Wish List
+
+* [ ] Implement lock and key system
+* [ ] Implement item combinations
 
 ## V2.1 Refactor
 
@@ -17,9 +22,9 @@ This version is primarily focused on restructuring files for ease of comprehensi
 
 ### Finished This Release
 
-- Converted data files to JSON
-- Altered file structure for better readability
-- Altered printing function to allow for optional alignment flag in first character
+* Converted data files to JSON
+* Altered file structure for better readability
+* Altered printing function to allow for optional alignment flag in first character
 
 ## V2 Refactor
 
@@ -27,5 +32,5 @@ This refactor includes a variety of updates to the class system that will allow 
 
 ### Still Under Development
 
-- [ ] Expand story - only tutorial is implemented
-- [x] Refactor the way that stories are stored
+* [ ] Expand story - only tutorial is implemented
+* [x] Refactor the way that stories are stored
