@@ -34,7 +34,7 @@
                     "intro": "By the door is a >bookshelf<. Are there any books on it?",
                     "desc": "Although it's a bookshelf, it contains mostly CDs,\nDVDs, and memorabilia. Delicately, you reposition a\nfigurine that was slightly out of place.\n\nYou manage to find one book on the bottom shelf.",
                     "books": ["alice"],
-                    "items": []
+                    "items": {}
                 }
             },
             "items": {}
@@ -53,10 +53,17 @@
                         "furiouslyHappy",
                         "firstStep"
                     ],
-                    "items": []
+                    "items": {}
                 }
             },
-            "items": {}
+            "items": {
+                "Key": {
+                    "name": "Brass Key",
+                    "desc": "A large brass key. It looks old.",
+                    "intro": "\nYou see a large brass key on the floor.",
+                    "code": "lockedRoom12345"
+                }
+            }
         },
         "AptKit": {
             "type": "ComboRoom",
@@ -102,6 +109,19 @@
                     "fallingText": "Engulfed in a darkness thicker than any you've experienced, you\ntrash about, desperately searching for any light, anything to tell\nyou where you are or what's happening.\n\nYou see nothing.\n\nAs you fall deeper and deeper, seemingly forever, you try to assure\nyourself that this is just a dream. A psychotic break. Anything\nother than reality. What a comfort it would be to know that it was\nmerely your perception that had changed, and that reality remained\nsafely intact outside of your illness-stricken mind.\n\nAs the last trace of comfort vanishes from your thoughts, and your\nfinal shred of hope slips away, you begin to hear music. \n\nBelow you? Above you? No way to know. Direction, space, time...\n\nIt's all meaningless now.\n\nTears well up in your eyes as you accept that you will never stop\nfalling. Clutching your legs up to your chest, you drift off to\nsleep as you fall endlessly into oblivion."
                 }
             },
+            "items": {}
+        },
+        "LockedRoom": {
+            "type": "LockedRoom",
+            "key": "lockedRoom12345",
+            "intro": [
+                "is a room. The door is locked.",
+                "is an unlocked room."
+            ],
+            "desc": [
+                "<You're in the room that you have unlocked.\n^Great work."
+            ],
+            "features": {},
             "items": {}
         }
     }

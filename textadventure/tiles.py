@@ -13,6 +13,7 @@ class Room:
     def __init__(self, x, y, intro):
         self.x = x
         self.y = y
+        self.locked = False
         self.intro = intro
         self.north = None
         self.east = None
@@ -32,16 +33,28 @@ class Room:
         south = world.tile_exists(self.x, self.y + 1)
         west = world.tile_exists(self.x - 1, self.y)
         if north:
-            moves.append(actions.MoveNorth())
+            if north.locked:
+                moves.append(actions.UnlockNorth(north))
+            else:
+                moves.append(actions.MoveNorth())
             self.north = north
         if east:
-            moves.append(actions.MoveEast())
+            if east.locked:
+                moves.append(actions.UnlockEast(east))
+            else:
+                moves.append(actions.MoveEast())
             self.east = east
         if south:
-            moves.append(actions.MoveSouth())
+            if south.locked:
+                moves.append(actions.UnlockSouth(south))
+            else:
+                moves.append(actions.MoveSouth())
             self.south = south
         if west:
-            moves.append(actions.MoveWest())
+            if west.locked:
+                moves.append(actions.UnlockWest(west))
+            else:
+                moves.append(actions.MoveWest())
             self.west = west
         return moves
 
@@ -139,12 +152,16 @@ class EventRoom(ComboRoom):
         if self.counter < len(self.story["intro"]):
             self.intro = self.story["intro"][self.counter]
 
-# class LockedRoom(ComboRoom):
-#     def __init__(self, x, y,
-#                  features=[],
-#                  items=[],
-#                  intro=story.defaults['rooms']['intro']):
-#         super().__init__(x, y, features=features, items=items, intro=intro)
+
+class LockedRoom(EventRoom):
+    def __init__(self, x, y, data):
+        super().__init__(x, y, data)
+        self.code = data["key"]
+        self.locked = True
+
+    def unlock(self):
+        self.locked = False
+        self.increment()
 
 
 # # Zone 1: Apartment

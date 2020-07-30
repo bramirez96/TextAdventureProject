@@ -20,11 +20,27 @@ class MoveNorth(Action):
                          hotkey="go north")
 
 
+class UnlockNorth(Action):
+    def __init__(self, room):
+        super().__init__(method=Player.unlockNorth,
+                         name="Unlock north",
+                         hotkey="unlock north",
+                         room=room)
+
+
 class MoveEast(Action):
     def __init__(self):
         super().__init__(method=Player.moveEast,
                          name="Move east",
                          hotkey="go east")
+
+
+class UnlockEast(Action):
+    def __init__(self, room):
+        super().__init__(method=Player.unlockEast,
+                         name="Unlock east",
+                         hotkey="unlock east",
+                         room=room)
 
 
 class MoveSouth(Action):
@@ -34,11 +50,27 @@ class MoveSouth(Action):
                          hotkey="go south")
 
 
+class UnlockSouth(Action):
+    def __init__(self, room):
+        super().__init__(method=Player.unlockSouth,
+                         name="Unlock south",
+                         hotkey="unlock south",
+                         room=room)
+
+
 class MoveWest(Action):
     def __init__(self):
         super().__init__(method=Player.moveWest,
                          name="Move west",
                          hotkey="go west")
+
+
+class UnlockWest(Action):
+    def __init__(self, room):
+        super().__init__(method=Player.unlockWest,
+                         name="Unlock west",
+                         hotkey="unlock west",
+                         room=room)
 
 
 class Help(Action):
