@@ -13,7 +13,7 @@ class Room:
     def __init__(self, x, y, intro):
         self.x = x
         self.y = y
-        self.locked = False
+        self.isLocked = False
         self.intro = intro
         self.north = None
         self.east = None
@@ -33,28 +33,24 @@ class Room:
         south = world.tile_exists(self.x, self.y + 1)
         west = world.tile_exists(self.x - 1, self.y)
         if north:
-            if north.locked:
+            if north.isLocked:
                 moves.append(actions.UnlockNorth(north))
-            else:
-                moves.append(actions.MoveNorth())
+            moves.append(actions.MoveNorth(north))
             self.north = north
         if east:
-            if east.locked:
+            if east.isLocked:
                 moves.append(actions.UnlockEast(east))
-            else:
-                moves.append(actions.MoveEast())
+            moves.append(actions.MoveEast(east))
             self.east = east
         if south:
-            if south.locked:
+            if south.isLocked:
                 moves.append(actions.UnlockSouth(south))
-            else:
-                moves.append(actions.MoveSouth())
+            moves.append(actions.MoveSouth(south))
             self.south = south
         if west:
-            if west.locked:
+            if west.isLocked:
                 moves.append(actions.UnlockWest(west))
-            else:
-                moves.append(actions.MoveWest())
+            moves.append(actions.MoveWest(west))
             self.west = west
         return moves
 
@@ -157,38 +153,8 @@ class LockedRoom(EventRoom):
     def __init__(self, x, y, data):
         super().__init__(x, y, data)
         self.code = data["key"]
-        self.locked = True
+        self.isLocked = True
 
     def unlock(self):
-        self.locked = False
+        self.isLocked = False
         self.increment()
-
-
-# # Zone 1: Apartment
-
-
-# class AptKit(ComboRoom):
-#     def __init__(self, x, y):
-#         super().__init__(x, y,
-#                          features=[featureLib.GenericSink(self)],
-#                          items=[itemLib.Gum(
-#                              story.zones["apartment"]["kitchen"]["items"]["gum"]["intro"])],
-#                          intro=story.zones["apartment"]["kitchen"]["intro"]
-#                          )
-
-#     def intro_text(self):
-#         return story.zones["apartment"]["kitchen"]["desc"] + super().intro_text()
-
-
-# class AptBath(ComboRoom):
-#     def __init__(self, x, y):
-#         super().__init__(x, y,
-#                          features=[featureLib.MagicMirror(room=self)],
-#                          intro=story.zones["apartment"]["bathroom"]["intro"][0])
-
-#     def intro_text(self):
-#         curCount = self.features[0].count
-#         self.intro = story.zones["apartment"]["bathroom"]["intro"][curCount]
-#         text = story.zones["apartment"]["bathroom"]["desc"][curCount] + \
-#             super().intro_text()
-#         return text

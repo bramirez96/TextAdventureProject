@@ -1,6 +1,6 @@
 import items
 import world
-from helpers import pause
+from helpers import pause, prompt
 
 
 class Player:
@@ -18,34 +18,59 @@ class Player:
         if action_method:
             action_method(**kwargs)
 
-    def move(self, dx, dy):
-        self.location_x += dx
-        self.location_y += dy
+    def move(self, dx, dy, room):
+        if room.isLocked:
+            # check if we need to unlock it or restrict access
+            if room.counter == 0:
+                room.increment()
+                pause("The door is locked.")
+            else:
+                pause("You don't have the key...")
+            return False
+        else:
+            self.location_x += dx
+            self.location_y += dy
+            return True
 
-    def moveNorth(self):
-        self.move(dx=0, dy=-1)
-        pause("You head north...")
+    def moveNorth(self, room):
+        if self.move(dx=0, dy=-1, room=room):
+            pause("You head north...")
 
-    def moveEast(self):
-        self.move(dx=1, dy=0)
-        pause("You head east...")
+    def moveEast(self, room):
+        if self.move(dx=1, dy=0, room=room):
+            pause("You head east...")
 
-    def moveSouth(self):
-        self.move(dx=0, dy=1)
-        pause("You head south...")
+    def moveSouth(self, room):
+        if self.move(dx=0, dy=1, room=room):
+            pause("You head south...")
 
-    def moveWest(self):
-        self.move(dx=-1, dy=0)
-        pause("You head west...")
+    def moveWest(self, room):
+        if self.move(dx=-1, dy=0, room=room):
+            pause("You head west...")
+
+    def unlockDoor(self, room):
+        if room.isLocked:
+            hasKey = False
+            for item in self.inventory:
+                if item.tag == "key" and item.code == room.code:
+                    room.unlock()
+                    pause("You turn the key and hear the lock open.")
+                    hasKey = True
+                    break
+            if not hasKey:
+                pause("You don't seem to have the right key...")
+        else:
+            pause("You've already unlocked this door.")
 
     def getHelp(self):
-        print(f"*************************************\n"
-              f"* Basic Controls                    *\n"
-              f"* go   -> move to a different room  *\n"
-              f"* i    -> view inventory            *\n"
-              f"* take -> pick up an item           *\n"
-              f"* look -> inspect a feature closely *\n"
-              f"*************************************")
+        print(f"********************************************\n"
+              f"* Basic Controls                           *\n"
+              f"* go     -> move to a different room       *\n"
+              f"* i      -> view inventory                 *\n"
+              f"* take   -> pick up an item                *\n"
+              f"* look   -> inspect a feature closely      *\n"
+              f"* unlock -> unlock a locked door or object *\n"
+              f"********************************************")
         pause("Press enter to close...")
 
     def printInv(self):
@@ -72,13 +97,8 @@ class Player:
         feature.dropItem(item)
         feature.room.findItem(item)
 
-    def unlockEast(self, room):
-        # if you have the item, unlock the room!
-        for item in self.inventory:
-            if item.tag == "key" and item.code == room.code:
-                # unlock the room
-                room.unlock()
-                pause("You turn the key and hear the lock click back.")
-                break
-        if room.locked:
-          pause("You don't seem to have the right key...")
+    def consumeItem(self, item):
+        # this function is going to mainly be used for keys for now,
+        # but is helpful to keep inventory clear when any single-use
+        # item is expended
+        pass

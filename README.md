@@ -8,8 +8,12 @@ This version is focusing on new forms of user interaction to make gameplay more 
 
 ### Under Development
 
-* [ ] Implement lock and key system
+* [x] Implement lock and key system
 * [ ] Implement item combinations
+
+### Future Release
+
+Current implementation searches through all of player's keys and if any of them are a match for the door, the door is unlocked. I'd like to make players select which key to try.
 
 #### Plan of Attack
 

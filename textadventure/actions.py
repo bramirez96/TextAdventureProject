@@ -14,60 +14,64 @@ class Action:
 
 
 class MoveNorth(Action):
-    def __init__(self):
+    def __init__(self, room):
         super().__init__(method=Player.moveNorth,
                          name="Move north",
-                         hotkey="go north")
+                         hotkey="go north",
+                         room=room)
 
 
 class UnlockNorth(Action):
     def __init__(self, room):
-        super().__init__(method=Player.unlockNorth,
+        super().__init__(method=Player.unlockDoor,
                          name="Unlock north",
                          hotkey="unlock north",
                          room=room)
 
 
 class MoveEast(Action):
-    def __init__(self):
+    def __init__(self, room):
         super().__init__(method=Player.moveEast,
                          name="Move east",
-                         hotkey="go east")
+                         hotkey="go east",
+                         room=room)
 
 
 class UnlockEast(Action):
     def __init__(self, room):
-        super().__init__(method=Player.unlockEast,
+        super().__init__(method=Player.unlockDoor,
                          name="Unlock east",
                          hotkey="unlock east",
                          room=room)
 
 
 class MoveSouth(Action):
-    def __init__(self):
+    def __init__(self, room):
         super().__init__(method=Player.moveSouth,
                          name="Move south",
-                         hotkey="go south")
+                         hotkey="go south",
+                         room=room)
 
 
 class UnlockSouth(Action):
     def __init__(self, room):
-        super().__init__(method=Player.unlockSouth,
+        super().__init__(method=Player.unlockDoor,
                          name="Unlock south",
                          hotkey="unlock south",
                          room=room)
 
 
 class MoveWest(Action):
-    def __init__(self):
+    def __init__(self, room):
         super().__init__(method=Player.moveWest,
                          name="Move west",
-                         hotkey="go west")
+                         hotkey="go west",
+                         room=room)
 
 
 class UnlockWest(Action):
     def __init__(self, room):
-        super().__init__(method=Player.unlockWest,
+        super().__init__(method=Player.unlockDoor,
                          name="Unlock west",
                          hotkey="unlock west",
                          room=room)
