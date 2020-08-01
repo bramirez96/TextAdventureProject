@@ -25,7 +25,7 @@ class Player:
                 room.increment()
                 pause("The door is locked.")
             else:
-                pause("You don't have the key...")
+                pause("You need to unlock the door.")
             return False
         else:
             self.location_x += dx
@@ -56,6 +56,7 @@ class Player:
                     room.unlock()
                     pause("You turn the key and hear the lock open.")
                     hasKey = True
+                    self.consumeItem(item)
                     break
             if not hasKey:
                 pause("You don't seem to have the right key...")
@@ -101,4 +102,4 @@ class Player:
         # this function is going to mainly be used for keys for now,
         # but is helpful to keep inventory clear when any single-use
         # item is expended
-        pass
+        self.inventory.remove(item)

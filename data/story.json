@@ -73,7 +73,7 @@
                 "Sink": {
                     "intro": "You see a >sink<.",
                     "desc": "^It's a sink.\n\n<Not much else to say...",
-                    "items": []
+                    "items": {}
                 }
             },
             "items": {
