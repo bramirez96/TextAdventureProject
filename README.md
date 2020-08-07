@@ -10,6 +10,17 @@ This version is focusing on new forms of user interaction to make gameplay more 
 
 * [x] Implement lock and key system
 * [ ] Implement item combinations
+* [ ] Implementing ability to move to new zones
+
+### Zone Implementation
+
+New this push. Basic "teleport" function is in place and functional, but in order to be scalable it needs a few more features:
+
+* World module needs to store zone starting positions in another array
+* Feature interact method needs to read the coordinates for the next zone out of the module:
+  * Zone entry rooms needs consistent and unique naming schema
+  * Feature gets current zone from the player object passed into the interact class to dynamically read in the next zone from the module, AND increments the player's current zone
+  * Tutorial Zone needs to be updated
 
 ### Future Release
 

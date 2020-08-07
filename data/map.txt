@@ -1,2 +1,5 @@
-AptKit  AptLR   AptBath LockedRoom
-.       AptBed  .       .
+AptKit      AptLR   AptBath
+.           AptBed  .
+.           .       .
+.           .       .
+LockedRoom  .       .

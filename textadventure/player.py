@@ -103,3 +103,11 @@ class Player:
         # but is helpful to keep inventory clear when any single-use
         # item is expended
         self.inventory.remove(item)
+
+    def teleport(self, coords, room):
+        # this function takes the player and drops it on a new tile
+        # useful for progressing through zones
+        x, y = coords
+        dx = x - self.location_x
+        dy = y - self.location_y
+        self.move(dx, dy, room)

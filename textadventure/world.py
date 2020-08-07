@@ -17,7 +17,7 @@ def load_tiles():
             tile_name = cols[x].replace("\n", " ")
 
             # change this to change starting tile
-            if tile_name == "AptBed":
+            if tile_name == "AptBath":
                 global starting_position
                 starting_position = (x, y)
 
@@ -28,9 +28,11 @@ def load_tiles():
                 _world[(x, y)] = None
             else:
                 # non-empty tile, read the room
-                _world[(x, y)] = getattr(tiles, zones[tile_name]["type"])(x, y, zones[tile_name])
-            
-            #  if tile_name == "." \
+                _world[(x, y)] = getattr(tiles,
+                                         zones[tile_name]["type"])(x, y, zones[tile_name])
+
+            # replaced to scale better
+            # _world[(x, y)] = None if tile_name == "." \
             #     else tiles.ComboRoom(x, y, zones[tile_name])
 
 
