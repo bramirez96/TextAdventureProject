@@ -2,6 +2,16 @@
 
 A text adventure game that is yet unnamed and will hopefully become a huge project.
 
+## Notable Features
+
+Currently, there is not a lot of story implemented. There is a small, 4-room tutorial that takes place in the main character's apartment. So far, my goal has been implementing a framework to futher develop the game, in a way that makes it easy to add on to the story.
+
+* Actions are implemented by creating subclasses off of the [`Action`](./textadventure/actions.py) class and are parsed by the `doAction()` method on the [`Player`](./textadventure/player.py) class. All actions have a corresponding method on the `Player` class, which manages game state and flow.
+* Story is room-based. All text displayed to user is based on what room they're in.
+* [Rooms](./textadventure/tiles.py) are dynamically loaded from an external [JSON file](./data/story.json), including any key [features](./textadventure/features.py) or [items](./textadventure/items.py) that are in the room.
+* [World map](./textadventure/world.py) is dynamically created from a [text file](./data/map.txt).
+* Lock and key system that uses its own `LockedRoom` room subclass and `Key` item subclass
+
 ## V2.3 Refactor
 
 This version is focusing on new forms of user interaction to make gameplay more dynamic and enjoyable. Recent feature implementations make these new additions seem much easier.

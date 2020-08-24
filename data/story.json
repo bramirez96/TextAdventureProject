@@ -56,14 +56,7 @@
                     "items": {}
                 }
             },
-            "items": {
-                "Key": {
-                    "name": "Brass Key",
-                    "desc": "A large brass key. It looks old.",
-                    "intro": "\nYou see a large brass >key< on the floor.",
-                    "code": "lockedRoom12345"
-                }
-            }
+            "items": {}
         },
         "AptKit": {
             "type": "ComboRoom",
@@ -116,7 +109,7 @@
             "key": "lockedRoom12345",
             "intro": [
                 "is a room.",
-                "is a room. The door is locked.",
+                "is a room with a large brass lock.",
                 "is an unlocked room."
             ],
             "desc": [
@@ -124,6 +117,20 @@
             ],
             "features": {},
             "items": {}
+        },
+        "NewZone": {
+            "type": "ComboRoom",
+            "intro": "is a boring room.",
+            "desc": "<This room is pretty boring.",
+            "features": {},
+            "items": {
+                "Key": {
+                    "name": "Brass Key",
+                    "desc": "A large brass key. It looks old.",
+                    "intro": "\nYou see a large brass >key< on the floor.",
+                    "code": "lockedRoom12345"
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ def load_tiles():
             tile_name = cols[x].replace("\n", " ")
 
             # change this to change starting tile
-            if tile_name == "AptBath":
+            if tile_name == "AptBed":
                 global starting_position
                 starting_position = (x, y)
 

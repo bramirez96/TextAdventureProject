@@ -153,8 +153,9 @@ class LockedRoom(EventRoom):
     def __init__(self, x, y, data):
         super().__init__(x, y, data)
         self.code = data["key"]
-        self.isLocked = False
+        self.isLocked = True
 
     def unlock(self):
         self.isLocked = False
         self.increment()
+
