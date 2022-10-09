@@ -9,6 +9,7 @@ class Player:
         self.hp = 100
         self.location_x, self.location_y = world.starting_position
         self.victory = False
+        self.zone = 1
 
     def isAlive(self):
         return self.hp > 0

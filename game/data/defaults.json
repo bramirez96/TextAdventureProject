@@ -1,0 +1,21 @@
+{
+	"items": {},
+	"features": {
+		"bookshelf": {
+			"desc": "You approach the bookshelf.\n\nWhich book would you like to read?",
+			"intro": "You see a bookshelf."
+		},
+		"book": {
+			"desc": "There's nothing in here.",
+			"intro": "You see a book."
+		},
+		"sink": {
+			"desc": "There's nothing special about the sink.",
+			"intro": "You see a sink."
+		}
+	},
+	"rooms": {
+		"intro": "is another room."
+	},
+	"general": {}
+}

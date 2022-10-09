@@ -36,6 +36,6 @@ def load_tiles():
             #     else tiles.ComboRoom(x, y, zones[tile_name])
 
 
-def tile_exists(x, y):
+def tile_exists(x, y) -> tiles.Room:
     # returns none or returns a room instance
     return _world.get((x, y))

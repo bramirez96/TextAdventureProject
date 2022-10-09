@@ -1,0 +1,4 @@
+{
+	"startScreen": "^Text Adventure Game\n^Brandon Ramirez\n\n^Controls\n<go\t-> move in a direction\n<take\t-> pick up an item\n<look\t-> interact with objects\n<i\t-> view your inventory\n<help\t-> view controls",
+	"helpScreen": "^Basic Controls\n<go\t-> move to a different room\n<i\t-> view inventory\n<take\t-> pick up an item\n<look\t-> inspect a feature closely"
+}
