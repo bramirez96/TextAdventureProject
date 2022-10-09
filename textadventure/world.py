@@ -28,9 +28,11 @@ def load_tiles():
                 _world[(x, y)] = None
             else:
                 # non-empty tile, read the room
-                _world[(x, y)] = getattr(tiles, zones[tile_name]["type"])(x, y, zones[tile_name])
-            
-            #  if tile_name == "." \
+                _world[(x, y)] = getattr(tiles,
+                                         zones[tile_name]["type"])(x, y, zones[tile_name])
+
+            # replaced to scale better
+            # _world[(x, y)] = None if tile_name == "." \
             #     else tiles.ComboRoom(x, y, zones[tile_name])
 
 

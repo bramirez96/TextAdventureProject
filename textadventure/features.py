@@ -149,8 +149,9 @@ class MagicMirror(Feature):
         if self.count == 3:
             clear()
             borderpr(self.story["fallingText"])
-            player.victory = True
-            pause(end=True)
+            coords = (0, 4)
+            player.teleport(coords, self.room)
+            pause()
         else:
             self.desc = self.story["desc"][self.count]
             self.intro = self.story["intro"][self.count]

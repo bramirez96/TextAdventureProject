@@ -1,2 +1,5 @@
-AptKit  AptLR   AptBath
-.       AptBed  .
+AptKit   AptLR       AptBath
+.        AptBed      .
+.        .           .
+.        .           .
+NewZone  LockedRoom  .
