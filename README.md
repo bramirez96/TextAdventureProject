@@ -1,6 +1,8 @@
-# Text Adventure
+# Through the Looking Glass
 
-A text adventure game that is yet unnamed and will hopefully become a huge project.
+A text adventure game with a pretty robust game engine but only like 2 minutes of gameplay.
+
+> Action class and game map generator implementations inspired by Phillip Johnson's article on letstalkdata (https://letstalkdata.com/2014/08/how-to-write-a-text-adventure-in-python/)****
 
 ## Notable Features
 
